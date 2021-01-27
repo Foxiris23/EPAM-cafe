@@ -4,6 +4,7 @@ import com.jwd.cafe.dao.specification.Specification;
 import com.jwd.cafe.domain.AbstractEntity;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.pool.DatabaseConnectionPool;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
     protected final DatabaseConnectionPool databaseConnectionPool;
 
@@ -51,7 +53,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
                 }
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to find by specification:", e);
             throw new DaoException();
         }
         return entities;
@@ -65,7 +67,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
                 preparedStatement.execute();
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to create", e);
             throw new DaoException();
         }
     }
@@ -78,7 +80,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
                 preparedStatement.execute();
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to update", e);
             throw new DaoException();
         }
         return entity;
@@ -94,7 +96,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
                 preparedStatement.execute();
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to delete with specification", e);
             throw new DaoException();
         }
     }
@@ -112,7 +114,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
                 }
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to count with specification", e);
             throw new DaoException();
         }
         return 0L;
