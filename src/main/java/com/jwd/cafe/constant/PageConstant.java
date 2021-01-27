@@ -1,6 +1,8 @@
 package com.jwd.cafe.constant;
 
 public class PageConstant {
+    public static final String ADMIN_PATH = "WEB-INF/jsp/admin";
+    public static final String USER_PATH = "WEB-INF/jsp/secured";
     public static final String MAIN_PAGE = "WEB-INF/jsp/open/main.jsp";
     public static final String LOGIN_PAGE = "WEB-INF/jsp/open/login.jsp";
     public static final String REGISTRATION_PAGE = "WEB-INF/jsp/open/registration.jsp";
@@ -16,7 +18,8 @@ public class PageConstant {
     public static final String PROFILE = "WEB-INF/jsp/secured/profile.jsp";
     public static final String REVIEW = "WEB-INF/jsp/secured/review.jsp";
     public static final String REVIEW_CONFIRM = "WEB-INF/jsp/secured/reviewConfirm.jsp";
-    public static final String USERS= "WEB-INF/jsp/admin/users.jsp";
-    public static final String ORDERS= "WEB-INF/jsp/admin/orders.jsp";
-    public static final String REVIEWS= "WEB-INF/jsp/admin/reviews.jsp";
+    public static final String USERS = "WEB-INF/jsp/admin/users.jsp";
+    public static final String ORDERS = "WEB-INF/jsp/admin/orders.jsp";
+    public static final String REVIEWS = "WEB-INF/jsp/admin/reviews.jsp";
+    public static final String ACCESS_BLOCKED_PAGE = "WEB-INF/jsp/open/accessBlocked.jsp";
 }

@@ -4,8 +4,6 @@ import com.jwd.cafe.command.*;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.ServiceException;
-import com.jwd.cafe.service.OrderService;
-import com.jwd.cafe.service.ReviewService;
 import com.jwd.cafe.service.UserService;
 import lombok.extern.log4j.Log4j2;
 
@@ -26,7 +24,7 @@ public class RestTopUpCommand implements Command{
         user.setBalance(user.getBalance() + 30);
         try {
             userService.updateUser(user);
-            return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_PROFILE.getName()),
+            return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
                     new HashMap<>());
         } catch (ServiceException e) {
             log.error("Failed to top up balance of user with id:" + user.getId());

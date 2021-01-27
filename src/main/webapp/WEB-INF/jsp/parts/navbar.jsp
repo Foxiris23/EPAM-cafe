@@ -27,31 +27,31 @@
                 </li>
                 <c:if test="${isAuthorized}">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to-profile"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-profile"/>">
                             <fmt:message key="link.profile"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to-my-orders"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-my-orders"/>">
                             <fmt:message key="link.myOrders"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to-review"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-review"/>">
                             <fmt:message key="link.review"/></a>
                     </li>
                     <c:if test="${isAdmin}">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="<c:url
-                            value="/cafe?command=to-users&page=1"/>">
+                            value="/cafe?command=admin-to-users&page=1"/>">
                                 <fmt:message key="link.users"/></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="<c:url
-                            value="/cafe?command=to-orders&page=1"/>">
+                            value="/cafe?command=admin-to-orders&page=1"/>">
                                 <fmt:message key="link.orders"/></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="<c:url
-                            value="/cafe?command=to-reviews&page=1"/>">
+                            value="/cafe?command=admin-to-reviews&page=1"/>">
                                 <fmt:message key="link.reviews"/></a>
                         </li>
                     </c:if>
@@ -60,7 +60,7 @@
             <div class="navbar-nav col-3 d-flex justify-content-end px-2">
                 <c:if test="${isAuthorized}">
                     <form onclick="cartToJson(this, 'inputCart-nav')" method="post" action="<c:url value="/cafe"/>">
-                        <input name="command" type="text" hidden value="to-cart">
+                        <input name="command" type="text" hidden value="user-to-cart">
                         <input id="inputCart-nav" type="text" name="cart" hidden>
                         <img id="cart" class="mx-3" src="<c:url value='../../../img/shopping-cart.svg'/>" alt="cart"
                              width="35" height="35"/>
@@ -83,7 +83,7 @@
                 </c:if>
                 <c:if test="${isAuthorized}">
                     <form class="mx-3" action="<c:url value='/cafe'/>">
-                        <input type="hidden" name="command" value="logout">
+                        <input type="hidden" name="command" value="user-logout">
                         <button id="logout" class="btn btn-outline-light"><fmt:message key="button.logout"/></button>
                     </form>
                 </c:if>

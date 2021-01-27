@@ -53,7 +53,7 @@ public class RestReviewCommand implements Command {
                 order.setReviewCode(null);
                 orderService.updateOrder(order);
                 return new ResponseContext(
-                        Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_REVIEW_CONFIRM.getName()),
+                        Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_REVIEW_CONFIRM.getName()),
                         new HashMap<>());
             } catch (ServiceException e) {
                 log.error("Failed to create review");

@@ -51,7 +51,7 @@
         </c:forEach>
         <c:if test="${requestScope.cart.size() > 0}">
             <form class="mt-5" action="<c:url value="/cafe"/>" method="post" style="max-width: 500px;">
-                <input type="text" hidden name="command" value="to-create-order">
+                <input type="text" hidden name="command" value="user-to-create-order">
                 <input id="inputCart" type="text" name="cart" hidden>
                 <button class="btn btn-dark" type="button" onclick="cartToJson(this.parentElement, 'inputCart')"
                         style="width: 560px;">

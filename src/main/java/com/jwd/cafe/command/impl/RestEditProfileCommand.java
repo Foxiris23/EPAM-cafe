@@ -32,7 +32,7 @@ public class RestEditProfileCommand implements Command {
             user.setLastName(requestContext.getRequestParameters().get(RequestConstant.LAST_NAME));
             try {
                 userService.updateUser(user);
-                return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_PROFILE.getName()),
+                return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
                         new HashMap<>());
             } catch (ServiceException e) {
                 log.error("Failed to execute edit profile command");

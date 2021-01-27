@@ -4,6 +4,7 @@ public class RequestConstant {
     public static final String COMMAND = "command";
     public static final String SERVER_MESSAGE = "server_message";
     public static final String USER = "user";
+    public static final String ADMIN = "admin";
     public static final String PASSWORD = "password";
     public static final String REPEAT_PASSWORD = "password_repeat";
     public static final String USERNAME = "username";

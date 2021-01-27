@@ -29,7 +29,7 @@
     </c:forEach>
     <c:if test="${isAdmin}">
         <div class="card col-6 m-5" style="width: 18rem;">
-            <a class="link-dark text-decoration-none" href="<c:url value="/cafe?command=to-add-type"/>">
+            <a class="link-dark text-decoration-none" href="<c:url value="/cafe?command=admin-to-add-type"/>">
                 <div class="d-flex justify-content-center">
                     <img src="<c:url value="../../../img/add-button.svg"/>" class="card-img-top mt-1"
                          alt="Plus" style="width: 12rem; height: 12rem">

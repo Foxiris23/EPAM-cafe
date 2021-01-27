@@ -72,7 +72,7 @@ public class RestCheckoutCommand implements Command {
                     Optional<String> serverMessage = orderService.create(order);
                     if (serverMessage.isEmpty()) {
                         return new ResponseContext(
-                                Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_ORDER_CONFIRM.getName()),
+                                Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_ORDER_CONFIRM.getName()),
                                 new HashMap<>());
                     }
                     return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper

@@ -36,7 +36,7 @@
             <img src="<c:url value="../../../img/add-button.svg"/>" class="card-img-top mt-1" style="max-height: 18rem;"
                  alt="Item">
             <div class="card-body row align-items-end">
-                <a href="<c:url value='/cafe?command=to-add-product&type_id=${requestScope.product_type.id}'/>"
+                <a href="<c:url value='/cafe?command=admin-to-add-product&type_id=${requestScope.product_type.id}'/>"
                    class="btn btn-dark w-100"><fmt:message key="button.addProduct"/></a>
             </div>
         </div>
