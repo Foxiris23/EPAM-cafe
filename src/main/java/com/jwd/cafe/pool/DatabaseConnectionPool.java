@@ -5,8 +5,10 @@ import com.jwd.cafe.exception.ApplicationStartException;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -32,7 +34,6 @@ public class DatabaseConnectionPool {
         DatabaseConfig dbConfig = DatabaseConfig.getInstance();
         Integer initSize = dbConfig.getPoolSize();
         connectionPool = new ArrayBlockingQueue<>(initSize);
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try {
             for (int i = 0; i < initSize; i++) {
                 connectionPool.offer(new DatabaseConnectionProxy(DriverManager.getConnection(
@@ -53,14 +54,17 @@ public class DatabaseConnectionPool {
         } catch (SQLException e) {
             log.error("Failed to close a connection");
         }
-        DriverManager.deregisterDriver(new com.mysql.cj.jdbc.Driver());
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            DriverManager.deregisterDriver(drivers.nextElement());
+        }
     }
 
     public Connection getConnection() {
         try {
             return connectionPool.take();
         } catch (InterruptedException e) {
-            //todo log
+            log.error("Waiting for a connection was interrupted");
             throw new RuntimeException();
         }
     }

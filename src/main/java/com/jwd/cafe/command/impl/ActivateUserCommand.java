@@ -19,8 +19,8 @@ import java.util.Set;
 public class ActivateUserCommand implements Command{
     private final UserService userService;
 
-    public ActivateUserCommand(){
-        userService = UserService.getInstance();
+    public ActivateUserCommand(UserService userService){
+        this.userService = userService;
     }
 
     @Override

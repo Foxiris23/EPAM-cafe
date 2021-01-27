@@ -31,6 +31,12 @@ public class RestCheckoutCommand implements Command {
     private final ProductService productService;
     private final OrderService orderService;
 
+    public RestCheckoutCommand(UserService userService, ProductService productService, OrderService orderService) {
+        this.userService = userService;
+        this.productService = productService;
+        this.orderService = orderService;
+    }
+
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new DateTimeValidator(
@@ -79,11 +85,5 @@ public class RestCheckoutCommand implements Command {
         }
         return new ResponseContext(Map.of(RequestConstant.VIOLATION_MESSAGE, violationMessages),
                 new HashMap<>());
-    }
-
-    public RestCheckoutCommand() {
-        userService = UserService.getInstance();
-        productService = ProductService.getInstance();
-        orderService = OrderService.getInstance();
     }
 }

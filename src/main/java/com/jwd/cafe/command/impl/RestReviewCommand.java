@@ -20,12 +20,12 @@ import java.util.Set;
 
 @Log4j2
 public class RestReviewCommand implements Command {
-    public final ReviewService reviewService;
-    public final OrderService orderService;
+    private final ReviewService reviewService;
+    private final OrderService orderService;
 
-    public RestReviewCommand() {
-        reviewService = ReviewService.getInstance();
-        orderService = OrderService.getInstance();
+    public RestReviewCommand(ReviewService reviewService, OrderService orderService) {
+        this.reviewService = reviewService;
+        this.orderService = orderService;
     }
 
     @Override

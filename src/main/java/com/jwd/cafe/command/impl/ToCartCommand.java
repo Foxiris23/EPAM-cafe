@@ -18,10 +18,10 @@ import java.util.Set;
 
 @Log4j2
 public class ToCartCommand implements Command{
-    public final ProductService productService;
+    private final ProductService productService;
 
-    public ToCartCommand() {
-        productService = ProductService.getInstance();
+    public ToCartCommand(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override

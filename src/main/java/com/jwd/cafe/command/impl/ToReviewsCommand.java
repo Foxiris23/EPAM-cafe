@@ -16,9 +16,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Log4j2
-public class ToReviewsCommand implements Command{
+public class ToReviewsCommand implements Command {
     private static final Integer PER_PAGE = 30;
-    ReviewService reviewService = ReviewService.getInstance();
+    private final ReviewService reviewService;
+
+    public ToReviewsCommand(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     @Override
     public ResponseContext execute(RequestContext requestContext) {

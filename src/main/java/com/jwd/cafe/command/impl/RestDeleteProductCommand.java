@@ -18,8 +18,8 @@ import java.util.Set;
 public class RestDeleteProductCommand implements Command {
     private final ProductService productService;
 
-    public RestDeleteProductCommand() {
-        productService = ProductService.getInstance();
+    public RestDeleteProductCommand(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override

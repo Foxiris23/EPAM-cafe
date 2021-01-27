@@ -14,10 +14,10 @@ import java.util.Map;
 
 @Log4j2
 public class RestTopUpCommand implements Command{
-    public final UserService userService;
+    private final UserService userService;
 
-    public RestTopUpCommand() {
-        userService = UserService.getInstance();
+    public RestTopUpCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

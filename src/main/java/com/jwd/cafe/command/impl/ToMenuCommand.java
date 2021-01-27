@@ -12,10 +12,10 @@ import java.util.Map;
 
 @Log4j2
 public class ToMenuCommand implements Command{
-    public final ProductTypeService productTypeService;
+    private final ProductTypeService productTypeService;
 
-    public ToMenuCommand() {
-        productTypeService = ProductTypeService.getInstance();
+    public ToMenuCommand(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
     }
 
     @Override

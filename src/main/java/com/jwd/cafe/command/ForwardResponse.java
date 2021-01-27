@@ -1,5 +1,8 @@
 package com.jwd.cafe.command;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
 public class ForwardResponse extends ResponseType {
     private final String page;
 

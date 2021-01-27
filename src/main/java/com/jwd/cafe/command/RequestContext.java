@@ -1,8 +1,11 @@
 package com.jwd.cafe.command;
 
 import com.jwd.cafe.constant.RequestConstant;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -16,6 +19,8 @@ import java.util.Map;
 
 @Getter
 @Setter
+@Builder(setterPrefix = "with")
+@AllArgsConstructor
 public class RequestContext {
     private Map<String, String> requestParameters;
 
@@ -28,6 +33,9 @@ public class RequestContext {
     private Map<String, Part> requestParts;
 
     private String locale;
+
+    public RequestContext() {
+    }
 
     public RequestContext(HttpServletRequest request) throws IOException, ServletException {
         requestParameters = extractRequestParameters(request);

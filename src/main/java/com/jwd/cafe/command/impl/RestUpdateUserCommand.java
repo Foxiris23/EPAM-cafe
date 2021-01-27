@@ -20,10 +20,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestUpdateUserCommand implements Command {
-    public final UserService userService;
+    private final UserService userService;
 
-    public RestUpdateUserCommand() {
-        userService = UserService.getInstance();
+    public RestUpdateUserCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

@@ -18,12 +18,11 @@ import java.util.Set;
 @Log4j2
 public class ToUsersCommand implements Command {
     private static final Integer PER_PAGE = 30;
-    public final UserService userService;
+    private final UserService userService;
 
-    public ToUsersCommand() {
-        userService = UserService.getInstance();
+    public ToUsersCommand(UserService userService) {
+        this.userService = userService;
     }
-
 
     @Override
     public ResponseContext execute(RequestContext requestContext) {

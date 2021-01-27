@@ -14,10 +14,10 @@ import java.util.Optional;
 
 @Log4j2
 public class ToProfileCommand implements Command{
-    public final UserService userService;
+    private final UserService userService;
 
-    public ToProfileCommand() {
-        userService = UserService.getInstance();
+    public ToProfileCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

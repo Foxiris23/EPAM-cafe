@@ -52,10 +52,12 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                        data-bs-target="#modal-${review.id}">
-                    <fmt:message key="button.feedback"/>
-                </button>
+                <div class="row justify-content-end">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#modal-${review.id}">
+                        <fmt:message key="button.feedback"/>
+                    </button>
+                </div>
             </td>
         </tr>
     </c:forEach>

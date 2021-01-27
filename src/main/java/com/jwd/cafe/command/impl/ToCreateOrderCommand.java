@@ -17,10 +17,10 @@ import java.util.Set;
 
 @Log4j2
 public class ToCreateOrderCommand implements Command {
-    public final ProductService productService;
+    private final ProductService productService;
 
-    public ToCreateOrderCommand() {
-        productService = ProductService.getInstance();
+    public ToCreateOrderCommand(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override

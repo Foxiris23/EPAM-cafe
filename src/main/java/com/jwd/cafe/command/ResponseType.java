@@ -1,5 +1,8 @@
 package com.jwd.cafe.command;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public abstract class ResponseType {
     public enum Type {
         REDIRECT,

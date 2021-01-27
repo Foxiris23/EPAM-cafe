@@ -16,10 +16,10 @@ import java.util.*;
 
 @Log4j2
 public class RestEditTypeCommand implements Command{
-    public final ProductTypeService productTypeService;
+    private final ProductTypeService productTypeService;
 
-    public RestEditTypeCommand() {
-        productTypeService = ProductTypeService.getInstance();
+    public RestEditTypeCommand(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
     }
 
     @Override

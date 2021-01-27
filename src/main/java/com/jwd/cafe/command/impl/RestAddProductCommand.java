@@ -22,6 +22,11 @@ public class RestAddProductCommand implements Command {
     private final ProductTypeService productTypeService;
     private final ProductService productService;
 
+    public RestAddProductCommand(ProductTypeService productTypeService, ProductService productService) {
+        this.productTypeService = productTypeService;
+        this.productService = productService;
+    }
+
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new ProductNameValidator(
@@ -56,10 +61,5 @@ public class RestAddProductCommand implements Command {
             return new ResponseContext(Map.of(RequestConstant.VIOLATION_MESSAGE, violationMessages), new HashMap<>());
         }
         return RestCommandType.ERROR.getCommand().execute(requestContext);
-    }
-
-    public RestAddProductCommand() {
-        productTypeService = ProductTypeService.getInstance();
-        productService = ProductService.getInstance();
     }
 }

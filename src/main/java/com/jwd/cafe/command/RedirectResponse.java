@@ -1,7 +1,9 @@
 package com.jwd.cafe.command;
 
 import com.jwd.cafe.constant.RequestConstant;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 public class RedirectResponse extends ResponseType {
     private final String command;
 

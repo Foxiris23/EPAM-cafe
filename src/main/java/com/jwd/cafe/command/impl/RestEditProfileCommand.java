@@ -15,10 +15,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestEditProfileCommand implements Command {
-    public final UserService userService;
+    private final UserService userService;
 
-    public RestEditProfileCommand() {
-        userService = UserService.getInstance();
+    public RestEditProfileCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

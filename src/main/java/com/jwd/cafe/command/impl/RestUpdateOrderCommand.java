@@ -23,12 +23,12 @@ import java.util.Set;
 
 @Log4j2
 public class RestUpdateOrderCommand implements Command {
-    public final UserService userService;
-    public final OrderService orderService;
+    private final UserService userService;
+    private final OrderService orderService;
 
-    public RestUpdateOrderCommand() {
-        userService = UserService.getInstance();
-        orderService = OrderService.getInstance();
+    public RestUpdateOrderCommand(UserService userService, OrderService orderService) {
+        this.userService = userService;
+        this.orderService = orderService;
     }
 
     @Override

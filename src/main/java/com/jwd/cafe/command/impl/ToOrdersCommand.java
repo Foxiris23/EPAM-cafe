@@ -18,10 +18,10 @@ import java.util.Set;
 @Log4j2
 public class ToOrdersCommand implements Command{
     private static final Integer PER_PAGE = 30;
-    public final OrderService orderService;
+    private final OrderService orderService;
 
-    public ToOrdersCommand() {
-        orderService = OrderService.getInstance();
+    public ToOrdersCommand(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @Override

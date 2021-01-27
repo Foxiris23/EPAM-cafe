@@ -17,12 +17,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestDeleteTypeCommand implements Command {
-    public final ProductTypeService productTypeService;
-    public final ProductService productService;
+    private final ProductTypeService productTypeService;
 
-    public RestDeleteTypeCommand() {
-        productTypeService = ProductTypeService.getInstance();
-        productService = ProductService.getInstance();
+    public RestDeleteTypeCommand(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
     }
 
     @Override

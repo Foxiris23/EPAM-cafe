@@ -15,10 +15,10 @@ import java.util.Map;
 
 @Log4j2
 public class ToMyOrdersCommand implements Command {
-    public final OrderService orderService;
+    private final OrderService orderService;
 
-    public ToMyOrdersCommand() {
-        orderService = OrderService.getInstance();
+    public ToMyOrdersCommand(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @Override

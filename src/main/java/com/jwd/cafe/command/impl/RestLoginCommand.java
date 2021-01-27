@@ -15,10 +15,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestLoginCommand implements Command{
-    public final UserService userService;
+    private final UserService userService;
 
-    public RestLoginCommand() {
-        userService = UserService.getInstance();
+    public RestLoginCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

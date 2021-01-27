@@ -21,10 +21,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestRegistrationCommand implements Command {
-    public final UserService userService;
+    private final UserService userService;
 
-    public RestRegistrationCommand() {
-        userService = UserService.getInstance();
+    public RestRegistrationCommand(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -61,11 +61,10 @@ public class RestRegistrationCommand implements Command {
                     return new ResponseContext(
                             Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper.localize(
                                     requestContext.getLocale(), serverMessage.get())), new HashMap<>()
-
                     );
                 }
             } catch (ServiceException e) {
-                log.error("Registration failed by UserService", e);
+                log.error("Registration failed by UserService");
                 return new RestErrorCommand().execute(requestContext);
             }
         } else {

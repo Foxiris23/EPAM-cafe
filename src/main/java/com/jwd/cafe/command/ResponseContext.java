@@ -1,10 +1,13 @@
 package com.jwd.cafe.command;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Map;
 
 @Getter
+@EqualsAndHashCode
 public class ResponseContext {
     private ResponseType responseType;
     private final Map<String, Object> requestAttributes;

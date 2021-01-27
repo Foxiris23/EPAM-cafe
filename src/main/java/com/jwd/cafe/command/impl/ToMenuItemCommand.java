@@ -17,12 +17,12 @@ import java.util.*;
 @Log4j2
 public class ToMenuItemCommand implements Command {
     private static final Integer PER_PAGE = 9;
-    public final ProductTypeService productTypeService;
-    public final ProductService productService;
+    private final ProductTypeService productTypeService;
+    private final ProductService productService;
 
-    public ToMenuItemCommand() {
-        productTypeService = ProductTypeService.getInstance();
-        productService = ProductService.getInstance();
+    public ToMenuItemCommand(ProductTypeService productTypeService, ProductService productService) {
+        this.productTypeService = productTypeService;
+        this.productService = productService;
     }
 
     @Override

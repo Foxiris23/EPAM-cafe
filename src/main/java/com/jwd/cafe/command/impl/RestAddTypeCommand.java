@@ -16,7 +16,11 @@ import java.util.*;
 
 @Log4j2
 public class RestAddTypeCommand implements Command{
-    public final ProductTypeService productTypeService;
+    private final ProductTypeService productTypeService;
+
+    public RestAddTypeCommand(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
+    }
 
     @Override
     public ResponseContext execute(RequestContext requestContext) {
@@ -45,9 +49,5 @@ public class RestAddTypeCommand implements Command{
         }
 
         return new ResponseContext(Map.of(RequestConstant.VIOLATION_MESSAGE, violationMessages), new HashMap<>());
-    }
-
-    public RestAddTypeCommand() {
-        productTypeService = ProductTypeService.getInstance();
     }
 }

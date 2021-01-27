@@ -20,10 +20,10 @@ import java.util.Set;
 
 @Log4j2
 public class RestEditProductCommand implements Command {
-    public final ProductService productService;
+    private final ProductService productService;
 
-    public RestEditProductCommand() {
-        productService = ProductService.getInstance();
+    public RestEditProductCommand(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override
