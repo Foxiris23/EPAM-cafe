@@ -17,6 +17,13 @@ import java.io.IOException;
 @WebServlet("/rest")
 @MultipartConfig(location = "D:\\Epam projects\\cafe\\target\\cafe\\uploads")
 public class RestController extends HttpServlet {
+    private RestCommandFactory restCommandFactory;
+
+    @Override
+    public void init() throws ServletException {
+        restCommandFactory = RestCommandFactory.getInstance();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -29,7 +36,7 @@ public class RestController extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestContext requestContext = new RequestContext(req);
-        Command command = RestCommandFactory.getInstance().getCommand(requestContext);
+        Command command = restCommandFactory.getCommand(requestContext);
 
         ResponseContext responseContext = command.execute(requestContext);
         responseContext.getSessionAttributes().forEach(req.getSession()::setAttribute);

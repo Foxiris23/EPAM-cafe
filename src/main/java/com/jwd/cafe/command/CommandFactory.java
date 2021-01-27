@@ -3,10 +3,19 @@ package com.jwd.cafe.command;
 import com.jwd.cafe.constant.RequestConstant;
 
 public class CommandFactory {
-    private static final CommandFactory INSTANCE = new CommandFactory();
+    private static volatile CommandFactory instance;
 
     public static CommandFactory getInstance() {
-        return INSTANCE;
+        CommandFactory localInstance = instance;
+        if (localInstance == null) {
+            synchronized (CommandFactory.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new CommandFactory();
+                }
+            }
+        }
+        return localInstance;
     }
 
     private CommandFactory() {

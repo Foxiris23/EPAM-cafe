@@ -54,7 +54,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             }
         } catch (SQLException e) {
             log.error("Failed to find by specification:", e);
-            throw new DaoException();
+            throw new DaoException(e);
         }
         return entities;
     }
@@ -68,7 +68,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             }
         } catch (SQLException e) {
             log.error("Failed to create", e);
-            throw new DaoException();
+            throw new DaoException(e);
         }
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             }
         } catch (SQLException e) {
             log.error("Failed to update", e);
-            throw new DaoException();
+            throw new DaoException(e);
         }
         return entity;
     }
@@ -97,7 +97,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             }
         } catch (SQLException e) {
             log.error("Failed to delete with specification", e);
-            throw new DaoException();
+            throw new DaoException(e);
         }
     }
 
@@ -115,7 +115,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             }
         } catch (SQLException e) {
             log.error("Failed to count with specification", e);
-            throw new DaoException();
+            throw new DaoException(e);
         }
         return 0L;
     }

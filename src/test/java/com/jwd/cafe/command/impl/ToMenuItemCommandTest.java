@@ -12,6 +12,8 @@ import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductService;
 import com.jwd.cafe.service.ProductTypeService;
 import com.jwd.cafe.util.Pageable;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -24,13 +26,14 @@ import static org.mockito.Mockito.when;
 
 public class ToMenuItemCommandTest {
     @Mock
-    private final ProductTypeService productTypeService;
+    private ProductTypeService productTypeService;
     @Mock
-    private final ProductService productService;
-    private final RequestContext requestContext;
-    private final ToMenuItemCommand command;
+    private ProductService productService;
+    private RequestContext requestContext;
+    private ToMenuItemCommand command;
 
-    public ToMenuItemCommandTest() {
+    @Before
+    public void beforeTests() {
         Map<String, String> params = new HashMap<>();
         params.put(RequestConstant.PAGE, "1");
         params.put(RequestConstant.TYPE_ID, "2");
@@ -57,5 +60,25 @@ public class ToMenuItemCommandTest {
                         RequestConstant.PRODUCT_TYPE, productTypeOptional.get()), new HashMap<>());
 
         assertThat(command.execute(requestContext)).isEqualTo(responseContext);
+    }
+
+    @Test
+    public void executeShouldReturnErrorResp() throws ServiceException {
+        when(productTypeService.findProductTypeById(anyInt())).thenThrow(new ServiceException());
+        when(productService.countProductWithTypeId(anyInt())).thenThrow(new ServiceException());
+        when(productService.findProductsByTypeId(anyInt(), anyInt(), anyInt())).thenThrow(new ServiceException());
+        ResponseContext responseContext =
+                new ResponseContext(
+                        new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.ERROR_PAGE),
+                        new HashMap<>(), new HashMap<>());
+        assertThat(command.execute(requestContext)).isEqualTo(responseContext);
+    }
+
+    @After
+    public void afterTests() {
+        productTypeService = null;
+        productService = null;
+        requestContext = null;
+        command = null;
     }
 }

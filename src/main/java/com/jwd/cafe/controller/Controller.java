@@ -14,6 +14,13 @@ import java.io.IOException;
 @Log4j2
 @WebServlet("/cafe")
 public class Controller extends HttpServlet {
+    private CommandFactory commandFactory;
+
+    @Override
+    public void init() throws ServletException {
+        commandFactory = CommandFactory.getInstance();
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -26,7 +33,7 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestContext requestContext = new RequestContext(req);
-        Command command = CommandFactory.getInstance().getCommand(requestContext);
+        Command command = commandFactory.getCommand(requestContext);
         ResponseContext responseContext = command.execute(requestContext);
         responseContext.getRequestAttributes().forEach(req::setAttribute);
         responseContext.getSessionAttributes().forEach(req.getSession()::setAttribute);

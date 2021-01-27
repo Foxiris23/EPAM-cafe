@@ -8,6 +8,8 @@ import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.UserService;
 import com.jwd.cafe.util.LocalizationHelper;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -23,12 +25,12 @@ import static org.mockito.Mockito.when;
 
 public class RestRegistrationCommandTest {
     @Mock
-    private final UserService userService;
-    private final RequestContext requestContext;
-    private final RestRegistrationCommand command;
+    private UserService userService;
+    private RequestContext requestContext;
+    private RestRegistrationCommand command;
 
-
-    public RestRegistrationCommandTest() {
+    @Before
+    public void beforeTests() {
         Map<String, String> params = new HashMap<>();
         params.put(RequestConstant.USERNAME, "test");
         params.put(RequestConstant.PASSWORD, "Test12345");
@@ -69,5 +71,12 @@ public class RestRegistrationCommandTest {
                         requestContext.getLocale(), "serverMessage.usernameAlreadyTaken")), new HashMap<>()
         );
         assertThat(command.execute(requestContext)).isEqualTo(responseContext);
+    }
+
+    @After
+    public void afterTests() {
+        userService = null;
+        requestContext = null;
+        command = null;
     }
 }
