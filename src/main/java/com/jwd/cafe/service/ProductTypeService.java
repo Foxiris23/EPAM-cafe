@@ -8,6 +8,7 @@ import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class ProductTypeService {
             synchronized (ProductTypeService.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ProductTypeService();
+                    instance = localInstance = new ProductTypeService(ProductTypeDao.getInstance());
                 }
             }
         }
@@ -114,7 +115,12 @@ public class ProductTypeService {
         return Optional.empty();
     }
 
-    private ProductTypeService() {
-        productTypeDao = ProductTypeDao.getInstance();
+    private ProductTypeService(ProductTypeDao productTypeDao) {
+        this.productTypeDao = productTypeDao;
+    }
+
+    @VisibleForTesting
+    public static ProductTypeService getTestInstance(ProductTypeDao productTypeDao) {
+        return new ProductTypeService(productTypeDao);
     }
 }

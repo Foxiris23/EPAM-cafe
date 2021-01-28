@@ -9,6 +9,7 @@ import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ProductService {
             synchronized (ProductService.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ProductService();
+                    instance = localInstance = new ProductService(ProductDao.getInstance());
                 }
             }
         }
@@ -155,7 +156,12 @@ public class ProductService {
         return Optional.empty();
     }
 
-    private ProductService() {
-        productDao = ProductDao.getInstance();
+    private ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    @VisibleForTesting
+    public static ProductService getTestInstance(ProductDao productDao) {
+        return new ProductService(productDao);
     }
 }

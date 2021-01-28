@@ -7,6 +7,7 @@ import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ReviewService {
             synchronized (ReviewService.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ReviewService();
+                    instance = localInstance = new ReviewService(ReviewDao.getInstance());
                 }
             }
         }
@@ -48,7 +49,6 @@ public class ReviewService {
         }
     }
 
-
     public void create(Review review) throws ServiceException {
         try {
             reviewDao.create(review);
@@ -58,7 +58,12 @@ public class ReviewService {
         }
     }
 
-    private ReviewService() {
-        reviewDao = ReviewDao.getInstance();
+    private ReviewService(ReviewDao reviewDao) {
+        this.reviewDao = reviewDao;
+    }
+
+    @VisibleForTesting
+    public static ReviewService getTestInstance(ReviewDao reviewDao) {
+        return new ReviewService(reviewDao);
     }
 }

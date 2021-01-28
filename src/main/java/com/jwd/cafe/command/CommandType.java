@@ -11,6 +11,7 @@ public enum CommandType {
     TO_LOGIN(new ToLoginCommand(), "to-login"),
     TO_REGISTRATION(new ToRegistrationCommand(), "to-registration"),
     TO_MENU(new ToMenuCommand(ProductTypeService.getInstance()), "to-menu"),
+    TO_ACCESS_BLOCKED(new ToAccessBlockedCommand(), "to-access-blocked"),
     LOCALE_SWITCH(new LocaleSwitchCommand(), "locale-switch"),
     VERIFICATION(new ActivateUserCommand(UserService.getInstance()), "verification"),
     USER_LOGOUT(new LogoutCommand(), "user-logout"),

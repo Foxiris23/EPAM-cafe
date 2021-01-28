@@ -18,29 +18,31 @@ public abstract class AbstractMailSender implements Runnable {
     }
 
     public void send(String subject, String text) throws EmailException {
-        try {
-            String username = mailSenderConfig.getUsername();
-            String password = mailSenderConfig.getPassword();
+        if (userEmail != null) {
+            try {
+                String username = mailSenderConfig.getUsername();
+                String password = mailSenderConfig.getPassword();
 
-            Session session = Session.getDefaultInstance(mailSenderConfig.getProperties(), new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
-                }
-            });
+                Session session = Session.getDefaultInstance(mailSenderConfig.getProperties(), new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(mailSenderConfig.getUsername()));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
-            message.setSubject(subject);
-            message.setText(text);
-            Transport transport = session.getTransport();
-            transport.connect(username, password);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-            log.debug("Email was successfully sent");
-        } catch (MessagingException e) {
-            log.error("Could not sent email", e);
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(mailSenderConfig.getUsername()));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
+                message.setSubject(subject);
+                message.setText(text);
+                Transport transport = session.getTransport();
+                transport.connect(username, password);
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+                log.debug("Email was successfully sent");
+            } catch (MessagingException e) {
+                log.error("Could not sent email", e);
+            }
         }
     }
 }

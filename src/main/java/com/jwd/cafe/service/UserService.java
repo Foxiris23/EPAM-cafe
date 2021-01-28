@@ -9,6 +9,7 @@ import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.mail.ActivationMailSender;
 import com.lambdaworks.crypto.SCryptUtil;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class UserService {
             synchronized (UserService.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new UserService();
+                    instance = localInstance = new UserService(UserDao.getInstance());
                 }
             }
         }
@@ -171,7 +172,12 @@ public class UserService {
         return Optional.empty();
     }
 
-    private UserService() {
-        userDao = UserDao.getInstance();
+    private UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @VisibleForTesting
+    public static UserService getTestInstance(UserDao userDao) {
+        return new UserService(userDao);
     }
 }

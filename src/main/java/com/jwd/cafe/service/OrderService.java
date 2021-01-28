@@ -10,6 +10,7 @@ import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.mail.OrderDetailsMailSender;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class OrderService {
             synchronized (OrderService.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new OrderService();
+                    instance = localInstance = new OrderService(OrderDao.getInstance(), UserService.getInstance());
                 }
             }
         }
@@ -120,8 +121,13 @@ public class OrderService {
         }
     }
 
-    private OrderService() {
-        orderDao = OrderDao.getInstance();
-        userService = UserService.getInstance();
+    private OrderService(OrderDao orderDao, UserService userService) {
+        this.orderDao = orderDao;
+        this.userService = userService;
+    }
+
+    @VisibleForTesting
+    public static OrderService getTestInstance(OrderDao orderDao, UserService userService) {
+        return new OrderService(orderDao, userService);
     }
 }

@@ -28,7 +28,7 @@ public class UserDao extends AbstractDao<User> {
     private static final String SQL_FIND_ALL =
             "SELECT bu.id, username, password, first_name, last_name, is_blocked, role_id, email, activation_code," +
                     " phone_number, is_active, balance, loyalty_points, role_name, ur.id FROM base_user as bu" +
-                    " INNER JOIN user_role AS ur ON ur.id = bu.id";
+                    " INNER JOIN user_role AS ur ON ur.id = bu.role_id";
     private static final String SQL_CREATE =
             "INSERT INTO base_user(username, password, first_name, last_name, is_blocked, role_id, email," +
                     " activation_code, phone_number, is_active, balance, loyalty_points)" +
