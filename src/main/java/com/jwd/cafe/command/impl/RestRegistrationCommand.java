@@ -32,7 +32,8 @@ public class RestRegistrationCommand implements Command {
         Set<String> violationMessages =
                 new NameValidator(new PasswordValidator(
                         new PasswordRepeatValidator(new EmailValidator(
-                                new PhoneNumberValidator(null))))).validate(requestContext);
+                                new PhoneNumberValidator(new UsernameValidator(null))))))
+                        .validate(requestContext);
 
         if (violationMessages.isEmpty()) {
             String username = requestContext.getRequestParameters().get(RequestConstant.USERNAME);

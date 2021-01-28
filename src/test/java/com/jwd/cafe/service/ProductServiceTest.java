@@ -6,8 +6,9 @@ import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import org.assertj.core.data.Offset;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -23,8 +25,8 @@ public class ProductServiceTest {
     private ProductDao productDao;
     private ProductService productService;
 
-    @Before
-    public void beforeTests() {
+    @BeforeEach
+    public void setUp() {
         productDao = mock(ProductDao.class);
         productService = ProductService.getTestInstance(productDao);
     }
@@ -47,12 +49,14 @@ public class ProductServiceTest {
         assertThat(productService.createProduct(Product.builder().withName("burgers").build()).isEmpty()).isFalse();
     }
 
-    @Test(expected = ServiceException.class)
+    @Test
     public void createProductShouldThrowServiceException() throws DaoException, ServiceException {
         when(productDao.findBySpecification(any(Specification.class))).thenReturn(new ArrayList<>());
         doThrow(DaoException.class).when(productDao).create(any(Product.class));
 
-        productService.createProduct(Product.builder().withName("burgers").build());
+        assertThatThrownBy(() -> {
+            productService.createProduct(Product.builder().withName("burgers").build());
+        }).isInstanceOf(ServiceException.class);
     }
 
     @Test
@@ -74,5 +78,11 @@ public class ProductServiceTest {
                 Product.builder().withPrice(10.0).build(), 2);
 
         assertThat(productService.calcTotalCost(cart)).isCloseTo(45.0, Offset.offset(0.01));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        productDao = null;
+        productService = null;
     }
 }

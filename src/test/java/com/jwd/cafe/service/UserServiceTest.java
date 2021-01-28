@@ -8,8 +8,9 @@ import com.jwd.cafe.dao.specification.Specification;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
@@ -26,8 +27,8 @@ public class UserServiceTest {
     private UserDao userDao;
     private UserService userService;
 
-    @Before
-    public void beforeTests() throws DaoException {
+    @BeforeEach
+    public void setUp() throws DaoException {
         userDao = mock(UserDao.class);
         userService = UserService.getTestInstance(userDao);
         doNothing().when(userDao).create(any(User.class));
@@ -128,5 +129,11 @@ public class UserServiceTest {
 
         assertThat(userService.activateUser(UUID.randomUUID().toString()).get())
                 .isEqualTo("serverMessage.incorrectActivationCode");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        userService = null;
+        userDao = null;
     }
 }

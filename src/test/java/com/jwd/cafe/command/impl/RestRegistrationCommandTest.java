@@ -8,9 +8,9 @@ import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.UserService;
 import com.jwd.cafe.util.LocalizationHelper;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.HashMap;
@@ -29,8 +29,8 @@ public class RestRegistrationCommandTest {
     private RequestContext requestContext;
     private RestRegistrationCommand command;
 
-    @Before
-    public void beforeTests() {
+    @BeforeEach
+    public void setUp() {
         Map<String, String> params = new HashMap<>();
         params.put(RequestConstant.USERNAME, "test");
         params.put(RequestConstant.PASSWORD, "Test12345");
@@ -73,8 +73,8 @@ public class RestRegistrationCommandTest {
         assertThat(command.execute(requestContext)).isEqualTo(responseContext);
     }
 
-    @After
-    public void afterTests() {
+    @AfterEach
+    public void tearDown() {
         userService = null;
         requestContext = null;
         command = null;

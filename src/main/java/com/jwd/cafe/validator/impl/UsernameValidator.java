@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class UsernameValidator extends AbstractValidator {
     private static final String USERNAME_PATTERN = "^[A-Za-z_]{4,20}$";
-    private static final String USERNAME_VIOLATION_MESSAGE = "violationMessage.username";
 
     public UsernameValidator(Validator next) {
         super(next);

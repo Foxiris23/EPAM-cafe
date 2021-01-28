@@ -1,7 +1,8 @@
 package com.jwd.cafe.controller.filter;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class XssRequestWrapperTest {
     private List<String> onlyScript;
     private List<String> scriptWithRequest;
 
-    @Before
-    public void beforeTest() {
+    @BeforeEach
+    public void setUp() {
         onlyScript = new ArrayList<>();
         onlyScript.add("<script>");
         onlyScript.add("<script>alert(‘XSS’)</script>");
@@ -49,5 +50,13 @@ public class XssRequestWrapperTest {
             actual.append(wrapper.stripXSS(param));
         }
         assertThat(actual.toString()).isNotEqualTo("");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        wrapper = null;
+        request = null;
+        onlyScript = null;
+        scriptWithRequest = null;
     }
 }

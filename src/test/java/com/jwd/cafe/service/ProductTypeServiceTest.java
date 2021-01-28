@@ -5,14 +5,16 @@ import com.jwd.cafe.dao.specification.Specification;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -21,8 +23,8 @@ public class ProductTypeServiceTest {
     private ProductTypeDao productTypeDao;
     private ProductTypeService productTypeService;
 
-    @Before
-    public void beforeTests() {
+    @BeforeEach
+    public void setUp() {
         productTypeDao = mock(ProductTypeDao.class);
         productTypeService = ProductTypeService.getTestInstance(productTypeDao);
     }
@@ -46,12 +48,14 @@ public class ProductTypeServiceTest {
                 .isEqualTo("serverMessage.typeNameAlreadyTaken");
     }
 
-    @Test(expected = ServiceException.class)
+    @Test
     public void createTypeShouldThrowServiceException() throws DaoException, ServiceException {
         when(productTypeDao.findBySpecification(any(Specification.class))).
                 thenThrow(DaoException.class);
 
-        productTypeService.createType(ProductType.builder().withName("Burgers").build());
+        assertThatThrownBy(() -> {
+            productTypeService.createType(ProductType.builder().withName("Burgers").build());
+        }).isInstanceOf(ServiceException.class);
     }
 
     @Test
@@ -71,5 +75,11 @@ public class ProductTypeServiceTest {
 
         assertThat(productTypeService.editType(1, "NotBurgers", anyString()).get())
                 .isEqualTo("serverMessage.productTypeNotFound");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        productTypeDao = null;
+        productTypeService = null;
     }
 }

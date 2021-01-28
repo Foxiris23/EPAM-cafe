@@ -21,7 +21,7 @@ public class DescriptionValidator extends AbstractValidator {
         Set<String> violationMessages = new HashSet<>();
         String composition = context.getRequestParameters().get(RequestConstant.DESCRIPTION);
 
-        if (StringUtils.isNullOrEmpty(composition) || composition.length() < 5 || composition.length() > 40) {
+        if (StringUtils.isNullOrEmpty(composition) || composition.length() < 5 || composition.length() > 80) {
             violationMessages.add(
                     LocalizationHelper.localize(context.getLocale(), "violationMessage.composition"));
         }

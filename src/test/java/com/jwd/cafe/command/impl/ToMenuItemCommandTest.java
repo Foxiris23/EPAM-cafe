@@ -12,9 +12,9 @@ import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductService;
 import com.jwd.cafe.service.ProductTypeService;
 import com.jwd.cafe.util.Pageable;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.*;
@@ -32,8 +32,8 @@ public class ToMenuItemCommandTest {
     private RequestContext requestContext;
     private ToMenuItemCommand command;
 
-    @Before
-    public void beforeTests() {
+    @BeforeEach
+    public void setUp() {
         Map<String, String> params = new HashMap<>();
         params.put(RequestConstant.PAGE, "1");
         params.put(RequestConstant.TYPE_ID, "2");
@@ -74,8 +74,8 @@ public class ToMenuItemCommandTest {
         assertThat(command.execute(requestContext)).isEqualTo(responseContext);
     }
 
-    @After
-    public void afterTests() {
+    @AfterEach
+    public void tearDown() {
         productTypeService = null;
         productService = null;
         requestContext = null;

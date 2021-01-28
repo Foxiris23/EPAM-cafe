@@ -6,13 +6,13 @@ import com.jwd.cafe.domain.PaymentMethod;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -24,8 +24,8 @@ public class OrderServiceTest {
     @Mock
     private UserService userService;
 
-    @Before
-    public void beforeTest() {
+    @BeforeEach
+    public void setUp() {
         orderDao = mock(OrderDao.class);
         userService = mock(UserService.class);
         orderService = OrderService.getTestInstance(orderDao, userService);
@@ -56,7 +56,7 @@ public class OrderServiceTest {
         assertThat(orderService.create(order).get()).isEqualTo("serverMessage.insufficientBalance");
     }
 
-    @Test(expected = ServiceException.class)
+    @Test
     public void createShouldThrowServiceException() throws DaoException, ServiceException {
         doThrow(DaoException.class).when(orderDao).create(any(Order.class));
         doNothing().when(userService).updateUser(any(User.class));
@@ -65,6 +65,15 @@ public class OrderServiceTest {
                 .withUser(User.builder().withBalance(10.0).withLoyaltyPoints(1).build())
                 .build();
 
-        orderService.create(order);
+        assertThatThrownBy(() -> {
+            orderService.create(order);
+        }).isInstanceOf(ServiceException.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        orderDao = null;
+        userService = null;
+        orderService = null;
     }
 }

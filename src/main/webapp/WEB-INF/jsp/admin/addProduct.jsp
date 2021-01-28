@@ -40,7 +40,7 @@
         <div class="form-group mt-4">
             <label for='description' class="form-label"><fmt:message key="label.description"/></label>
             <input id="description" class="form-control" type="text" name="description"
-                   placeholder="<fmt:message key="placeholder.description"/>" pattern="^.{5,40}$"
+                   placeholder="<fmt:message key="placeholder.description"/>" pattern="^.{5,80}$"
                    required>
             <div class="invalid-feedback">
                 <fmt:message key="prescription.description"/>

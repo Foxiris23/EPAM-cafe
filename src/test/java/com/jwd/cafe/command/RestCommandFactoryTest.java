@@ -1,12 +1,11 @@
 package com.jwd.cafe.command;
 
-import com.jwd.cafe.command.impl.ErrorCommand;
 import com.jwd.cafe.command.impl.RestErrorCommand;
 import com.jwd.cafe.command.impl.RestLoginCommand;
 import com.jwd.cafe.constant.RequestConstant;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RestCommandFactoryTest {
     private RestCommandFactory restCommandFactory;
 
-    @Before
-    public void beforeTest() {
+    @BeforeEach
+    public void setUp() {
         restCommandFactory = RestCommandFactory.getInstance();
     }
 
@@ -48,8 +47,8 @@ public class RestCommandFactoryTest {
         assertThat(restCommandFactory.getCommand(requestContext)).isInstanceOf(RestErrorCommand.class);
     }
 
-    @After
-    public void afterTest() {
+    @AfterEach
+    public void tearDown() {
         restCommandFactory = null;
     }
 }
