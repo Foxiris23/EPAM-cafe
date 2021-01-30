@@ -5,6 +5,7 @@ import com.jwd.cafe.dao.specification.FindUserById;
 import com.jwd.cafe.domain.*;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.EntityNotFoundException;
+import com.jwd.cafe.pool.DatabaseConnectionPool;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
@@ -24,7 +25,8 @@ public class OrderDao extends AbstractDao<Order> {
             synchronized (OrderDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new OrderDao();
+                    instance = localInstance = new OrderDao(
+                            DatabaseConnectionPool.getInstance(), UserDao.getInstance(), ProductDao.getInstance());
                 }
             }
         }
@@ -169,8 +171,9 @@ public class OrderDao extends AbstractDao<Order> {
         }
     }
 
-    private OrderDao() {
-        userDao = UserDao.getInstance();
-        productDao = ProductDao.getInstance();
+    private OrderDao(DatabaseConnectionPool databaseConnectionPool, UserDao userDao, ProductDao productDao) {
+        super(databaseConnectionPool);
+        this.userDao = userDao;
+        this.productDao = productDao;
     }
 }

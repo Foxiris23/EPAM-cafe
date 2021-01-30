@@ -30,7 +30,7 @@ public class ConnectionPoolListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
-            databaseConnectionPool.destroyConnectionPool();
+            databaseConnectionPool.destroyConnectionPool(true);
         } catch (SQLException e) {
             log.error("Failed to destroy connection pool.", e);
         }

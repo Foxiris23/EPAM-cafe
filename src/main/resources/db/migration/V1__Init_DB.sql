@@ -20,7 +20,8 @@ create table if not exists base_user
     balance         double          not null,
     loyalty_points  int             not null,
 
-    foreign key (role_id) references user_role (id) on delete restrict on update cascade
+    constraint baseUser_role_fk foreign key (role_id)
+     references user_role (id) on delete restrict on update cascade
 );
 
 alter table base_user
@@ -42,7 +43,8 @@ create table if not exists product
     description   varchar(255)        not null,
     type_id       int                 not null,
 
-    foreign key (type_id) references product_type (id) on delete cascade on update cascade
+    constraint product_productType_fk foreign key (type_id)
+     references product_type (id) on delete cascade on update cascade
 );
 
 alter table product
@@ -71,9 +73,12 @@ create table if not exists cafe_order
     method_id     int           not null,
     user_id       bigint        not null,
 
-    foreign key (status_id) references order_status (id) on delete restrict on update cascade,
-    foreign key (method_id) references payment_method(id) on delete restrict on update cascade,
-    foreign key (user_id) references base_user (id) on delete cascade on update cascade
+    constraint order_orderStatus_fk foreign key (status_id)
+     references order_status (id) on delete restrict on update cascade,
+    constraint order_paymentMethod_fk foreign key (method_id)
+     references payment_method(id) on delete restrict on update cascade,
+    constraint order_user_fk foreign key (user_id)
+     references base_user (id) on delete cascade on update cascade
 );
 
 alter table cafe_order
@@ -86,8 +91,10 @@ create table if not exists order_product
     amount int            not null,
 
     primary key (order_id, product_id),
-    foreign key (order_id) references cafe_order (id) on delete restrict on update cascade,
-    foreign key (product_id) references product (id) on delete restrict on update cascade
+    constraint order_product_fk foreign key (order_id)
+     references cafe_order (id) on delete restrict on update cascade,
+    constraint product_order_fk foreign key (product_id)
+     references product (id) on delete restrict on update cascade
 );
 
 create table if not exists review
@@ -97,5 +104,6 @@ create table if not exists review
     rate     int not null,
     order_id bigint not null unique,
 
-    foreign key (order_id) references cafe_order (id) on delete cascade on update cascade
+    constraint review_order_fk foreign key (order_id)
+     references cafe_order (id) on delete cascade on update cascade
 );

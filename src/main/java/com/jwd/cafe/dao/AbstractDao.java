@@ -18,8 +18,8 @@ import java.util.Optional;
 public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
     protected final DatabaseConnectionPool databaseConnectionPool;
 
-    protected AbstractDao() {
-        databaseConnectionPool = DatabaseConnectionPool.getInstance();
+    protected AbstractDao(DatabaseConnectionPool databaseConnectionPool) {
+        this.databaseConnectionPool = databaseConnectionPool;
     }
 
     protected abstract Optional<T> parseResultSet(ResultSet resultSet) throws SQLException, DaoException;
@@ -88,7 +88,6 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
 
     @Override
     public void deleteWithSpecification(final Specification specification) throws DaoException {
-        System.out.println(getDeleteSql() + specification.specify());
         try (Connection connection = databaseConnectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     getDeleteSql() + specification.specify())) {

@@ -3,6 +3,7 @@ package com.jwd.cafe.dao.impl;
 import com.jwd.cafe.dao.AbstractDao;
 import com.jwd.cafe.domain.Role;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.pool.DatabaseConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ public class UserDao extends AbstractDao<User> {
             synchronized (UserDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new UserDao();
+                    instance = localInstance = new UserDao(DatabaseConnectionPool.getInstance());
                 }
             }
         }
@@ -37,7 +38,7 @@ public class UserDao extends AbstractDao<User> {
             "UPDATE base_user SET username = ?, password = ?, first_name = ?, last_name = ?, is_blocked = ?, role_id = ?," +
                     " email = ?, activation_code = ?, phone_number = ?, is_active = ?, balance = ?, loyalty_points = ?" +
                     " WHERE id = ?";
-    private static final String SQL_DELETE = "DELETE FROM base_user WHERE id = ?";
+    private static final String SQL_DELETE = "DELETE FROM base_user as bu";
     private static final String SQL_COUNT = "SELECT COUNT(*) as count FROM base_user";
 
 
@@ -114,6 +115,7 @@ public class UserDao extends AbstractDao<User> {
         preparedStatement.setInt(12, entity.getLoyaltyPoints());
     }
 
-    private UserDao() {
+    private UserDao(DatabaseConnectionPool pool) {
+        super(pool);
     }
 }

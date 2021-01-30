@@ -28,7 +28,8 @@ public class ProductDao extends AbstractDao<Product> {
             synchronized (ProductDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ProductDao();
+                    instance = localInstance = new ProductDao(
+                            DatabaseConnectionPool.getInstance(), ProductTypeDao.getInstance());
                 }
             }
         }
@@ -134,7 +135,8 @@ public class ProductDao extends AbstractDao<Product> {
         return products;
     }
 
-    private ProductDao() {
-        productTypeDao = ProductTypeDao.getInstance();
+    private ProductDao(DatabaseConnectionPool pool, ProductTypeDao productTypeDao) {
+        super(pool);
+        this.productTypeDao = productTypeDao;
     }
 }

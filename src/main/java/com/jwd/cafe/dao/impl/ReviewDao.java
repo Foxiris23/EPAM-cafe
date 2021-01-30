@@ -5,6 +5,7 @@ import com.jwd.cafe.dao.specification.FindOrderById;
 import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.exception.DaoException;
+import com.jwd.cafe.pool.DatabaseConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,8 @@ public class ReviewDao extends AbstractDao<Review> {
             synchronized (ReviewDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ReviewDao();
+                    instance = localInstance = new ReviewDao(
+                            DatabaseConnectionPool.getInstance(), OrderDao.getInstance());
                 }
             }
         }
@@ -94,7 +96,8 @@ public class ReviewDao extends AbstractDao<Review> {
         preparedStatement.setLong(3, review.getOrder().getId());
     }
 
-    private ReviewDao() {
-        orderDao = OrderDao.getInstance();
+    private ReviewDao(DatabaseConnectionPool pool, OrderDao orderDao) {
+        super(pool);
+        this.orderDao = OrderDao.getInstance();
     }
 }

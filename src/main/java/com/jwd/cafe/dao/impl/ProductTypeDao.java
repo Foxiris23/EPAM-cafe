@@ -2,6 +2,7 @@ package com.jwd.cafe.dao.impl;
 
 import com.jwd.cafe.dao.AbstractDao;
 import com.jwd.cafe.domain.ProductType;
+import com.jwd.cafe.pool.DatabaseConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
             synchronized (ProductTypeDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ProductTypeDao();
+                    instance = localInstance = new ProductTypeDao(DatabaseConnectionPool.getInstance());
                 }
             }
         }
@@ -79,6 +80,7 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
         preparedStatement.setInt(3, entity.getId());
     }
 
-    private ProductTypeDao() {
+    private ProductTypeDao(DatabaseConnectionPool pool) {
+        super(pool);
     }
 }
