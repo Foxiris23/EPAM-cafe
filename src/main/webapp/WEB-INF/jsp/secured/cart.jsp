@@ -32,15 +32,25 @@
                             <div class="d-flex justify-content-center">
                                 <div class="row align-items-end">
                                     <div class="btn-group" role="group">
-                                        <button type="button" onclick="add(${item.getKey().id}, -1)"
-                                                class="btn btn-danger" style="width: 2rem;">-
-                                        </button>
+                                        <form name="addToCart" method="post" action="<c:url value="/rest"/>"
+                                              class="needs-validation w-100" novalidate>
+                                            <input type="hidden" name="id" value="${item.getKey().id}">
+                                            <input type="hidden" name="command" value="user-delete-from-cart">
+                                            <button type="submit" onclick="add(${item.getKey().id}, -1)"
+                                                    class="btn btn-danger" style="width: 2rem;">-
+                                            </button>
+                                        </form>
                                         <button id="${item.getKey().id}" type="button" class="btn btn-outline-dark"
                                                 style="min-width: 2rem; border-width: 0" disabled>${item.getValue()}
                                         </button>
-                                        <button type="button" onclick="add(${item.getKey().id}, 1)"
-                                                class="btn btn-success" style="width: 2rem;">+
-                                        </button>
+                                        <form name="deleteFromCart" method="post" action="<c:url value="/rest"/>"
+                                              class="needs-validation w-100" novalidate>
+                                            <input type="hidden" name="id" value="${item.getKey().id}">
+                                            <input type="hidden" name="command" value="user-add-to-cart">
+                                            <button type="submit" onclick="add(${item.getKey().id}, 1)"
+                                                    class="btn btn-success" style="width: 2rem;">+
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -50,14 +60,10 @@
             </div>
         </c:forEach>
         <c:if test="${requestScope.cart.size() > 0}">
-            <form class="mt-5" action="<c:url value="/cafe"/>" method="post" style="max-width: 500px;">
-                <input type="text" hidden name="command" value="user-to-create-order">
-                <input id="inputCart" type="text" name="cart" hidden>
-                <button class="btn btn-dark" type="button" onclick="cartToJson(this.parentElement, 'inputCart')"
-                        style="width: 560px;">
-                    <fmt:message key="button.checkout"/>
-                </button>
-            </form>
+            <a class="btn btn-dark" type="button" href="<c:url value="/cafe?command=user-to-create-order"/>"
+               style="width: 560px;">
+                <fmt:message key="button.checkout"/>
+            </a>
         </c:if>
     </div>
 </div>
@@ -65,21 +71,19 @@
     <c:if test="${requestScope.cart.size() > 0}">
 
     async function add(id, number) {
-        let amount = localStorage.getItem(id);
-        if (amount == null) {
-            if (parseInt(number) > 0) {
-                localStorage.setItem(id, '1');
-                document.getElementById(id).innerText = '1';
-            }
-        } else {
-            let newAmount = parseInt(amount) + parseInt(number);
-            if (newAmount < 1) {
-                localStorage.removeItem(id);
-                document.getElementById(id).innerText = '0';
-            } else {
-                localStorage.setItem(id, newAmount + '');
-                document.getElementById(id).innerText = newAmount + '';
-            }
+        let value = document.getElementById(id).innerText;
+        let currNumber = parseInt(value);
+        let addNumber = parseInt(number);
+        currNumber += addNumber;
+        document.getElementById(id).innerText = '' + currNumber;
+    }
+
+    function onAjaxSuccess(data) {
+        let parse = JSON.parse(data);
+        let redirectCommand = parse.redirect_command;
+        if (redirectCommand != null) {
+            localStorage.clear();
+            window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand;
         }
     }
 

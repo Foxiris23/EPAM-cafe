@@ -10,7 +10,6 @@ import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.OrderService;
 import com.jwd.cafe.service.ProductService;
 import com.jwd.cafe.service.UserService;
-import com.jwd.cafe.util.JsonUtil;
 import com.jwd.cafe.util.LocalizationHelper;
 import com.jwd.cafe.validator.impl.DateTimeValidator;
 import com.jwd.cafe.validator.impl.MethodValidator;
@@ -41,9 +40,7 @@ public class RestCheckoutCommand implements Command {
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new DateTimeValidator(
                 new StringValidator(
-                        new MethodValidator(
-                                new StringValidator(null, RequestConstant.CART)),
-                        RequestConstant.ADDRESS)).validate(requestContext);
+                        new MethodValidator(null), RequestConstant.ADDRESS)).validate(requestContext);
 
         if (violationMessages.isEmpty()) {
             try {
@@ -51,32 +48,37 @@ public class RestCheckoutCommand implements Command {
                 String address = requestContext.getRequestParameters().get(RequestConstant.ADDRESS);
                 String method = requestContext.getRequestParameters().get(RequestConstant.METHOD);
                 String json = requestContext.getRequestParameters().get(RequestConstant.CART);
-                Map<Integer, Integer> cart = JsonUtil.jsonToCart(json);
-                Map<Product, Integer> productsMap = productService.loadCart(cart);
-                Optional<User> user = userService.findById((
-                        (User) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
-                if (productsMap.size() > 0 && user.isPresent()) {
-                    LocalDateTime deliveryDate = LocalDateTime.parse(dateTimeStr,
-                            DateTimeFormatter.ofPattern(RequestConstant.TIME_PATTERN));
-                    double totalCost = productService.calcTotalCost(productsMap);
+                Map<Integer, Integer> cart =
+                        (Map<Integer, Integer>) requestContext.getSessionAttributes().get(RequestConstant.CART);
+                if (cart != null) {
+                    Map<Product, Integer> productsMap = productService.loadCart(cart);
 
-                    Order order = Order.builder()
-                            .withCost(totalCost).withAddress(address)
-                            .withReviewCode(RandomStringUtils.randomAlphabetic(10))
-                            .withCreateDate(LocalDateTime.now())
-                            .withDeliveryDate(deliveryDate)
-                            .withStatus(OrderStatus.ACTIVE).withMethod(PaymentMethod.valueOf(method))
-                            .withUser(user.get())
-                            .withProducts(productsMap).build();
+                    Optional<User> user = userService.findById((
+                            (User) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
+                    if (productsMap.size() > 0 && user.isPresent()) {
+                        LocalDateTime deliveryDate = LocalDateTime.parse(dateTimeStr,
+                                DateTimeFormatter.ofPattern(RequestConstant.TIME_PATTERN));
+                        double totalCost = productService.calcTotalCost(productsMap);
 
-                    Optional<String> serverMessage = orderService.create(order);
-                    if (serverMessage.isEmpty()) {
-                        return new ResponseContext(
-                                Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_ORDER_CONFIRM.getName()),
-                                new HashMap<>());
+                        Order order = Order.builder()
+                                .withCost(totalCost).withAddress(address)
+                                .withReviewCode(RandomStringUtils.randomAlphabetic(10))
+                                .withCreateDate(LocalDateTime.now())
+                                .withDeliveryDate(deliveryDate)
+                                .withStatus(OrderStatus.ACTIVE).withMethod(PaymentMethod.valueOf(method))
+                                .withUser(user.get())
+                                .withProducts(productsMap).build();
+
+                        Optional<String> serverMessage = orderService.create(order);
+                        if (serverMessage.isEmpty()) {
+                            return new ResponseContext(
+                                    Map.of(RequestConstant.REDIRECT_COMMAND,
+                                            CommandType.USER_TO_ORDER_CONFIRM.getName()),
+                                    new HashMap<>());
+                        }
+                        return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper
+                                .localize(requestContext.getLocale(), serverMessage.get())), new HashMap<>());
                     }
-                    return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper
-                            .localize(requestContext.getLocale(), serverMessage.get())), new HashMap<>());
                 }
             } catch (ServiceException e) {
                 log.error("Failed to create order");

@@ -20,8 +20,14 @@
                 <p class="card-text">${item.description}</p>
                 <p class="card-text">${item.price} $</p>
                 <c:if test="${isAuthorized}">
-                    <button onclick="add(${item.id}, this)" class="btn btn-dark w-100"><fmt:message
-                            key="button.add"/></button>
+                    <form name="addToCart" method="post" action="<c:url value="/rest"/>"
+                          class="needs-validation w-100" novalidate>
+                        <input type="hidden" name="id" value="${item.id}">
+                        <input type="hidden" name="command" value="user-add-to-cart">
+                        <button type="submit" onclick="added(this)" class="btn btn-dark w-100">
+                            <fmt:message key="button.add"/>
+                        </button>
+                    </form>
                 </c:if>
                 <c:if test="${isAdmin}">
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -159,15 +165,7 @@
 </div>
 <c:if test="${isAuthorized}">
     <script>
-        async function add(id, btn) {
-            let amount = localStorage.getItem(id);
-            if (amount == null) {
-                localStorage.setItem(id, 1 + '');
-            } else {
-                let newAmount = parseInt(amount) + 1;
-                localStorage.setItem(id, newAmount + '');
-            }
-
+        function added(btn) {
             btn.classList.remove("btn-dark");
             btn.classList.add("btn-success");
             btn.innerText = '<fmt:message key="button.added"/>';
@@ -180,6 +178,19 @@
                 btn.innerText = '<fmt:message key="button.add"/>';
             }
         }
+
+        <c:if test="${not isAdmin}">
+
+        function onAjaxSuccess(data) {
+            let parse = JSON.parse(data);
+            let redirectCommand = parse.redirect_command;
+            if (redirectCommand != null) {
+                localStorage.clear();
+                window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand;
+            }
+        }
+
+        </c:if>
     </script>
 </c:if>
 <c:import url="../parts/footer.jsp"/>

@@ -10,27 +10,11 @@
     document.getElementById("currUrl").value = window.location.search;
 
     <c:if test="${isAuthorized}">
-    if (localStorage.length > 0) {
-        document.getElementById("cart").src = '<c:url value="../../../img/shopping-cart-red.svg"/>';
-    }
-
-    async function cartToJson(form, id) {
-        let arr = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            arr[i] = {
-                id: key,
-                amount: localStorage.getItem(key)
-            };
-        }
-        let cart = {
-            cart: arr
-        }
-        document.getElementById(id).value = JSON.stringify(cart);
-        if (form != null) {
-            form.submit();
-        }
-    }
+    <c:if test="${not empty sessionScope.cart}">
+    <c:if test="${sessionScope.cart.size() gt 0}">
+    document.getElementById("cart").src = '<c:url value="../../../img/shopping-cart-red.svg"/>';
+    </c:if>
+    </c:if>
 
     document.getElementById("logout").addEventListener('click', function () {
         localStorage.clear();

@@ -14,7 +14,6 @@
         <p id="server_message" class="text-danger"></p>
         <p id="violations" class="text-danger"></p>
         <form name="checkout" action="<c:url value="/rest"/>" method="post" class="needs-validation" novalidate>
-            <input id="checkout-cart" type="text" name="cart" hidden>
             <input type="text" name="command" hidden value="user-checkout">
             <div class="form-group mt-5">
                 <label for="address" class="form-label"><fmt:message key="label.deliveryAddress"/></label>

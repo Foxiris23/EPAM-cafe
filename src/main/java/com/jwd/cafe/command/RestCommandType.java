@@ -18,6 +18,8 @@ public enum RestCommandType {
     USER_EDIT_PROFILE(new RestEditProfileCommand(UserService.getInstance()), "user-edit-profile"),
     USER_REVIEW(new RestReviewCommand(ReviewService.getInstance(), OrderService.getInstance()),
             "user-review"),
+    USER_ADD_TO_CART(new RestAddToCartCommand(ProductService.getInstance()),"user-add-to-cart"),
+    USER_DELETE_FROM_CART(new RestDeleteFromCartCommand(ProductService.getInstance()),"user-delete-from-cart"),
     ADMIN_UPDATE_USER(new RestUpdateUserCommand(UserService.getInstance()), "admin-user-update"),
     ADMIN_UPDATE_ORDER(new RestUpdateOrderCommand(UserService.getInstance(), OrderService.getInstance()),
             "admin-order-update"),

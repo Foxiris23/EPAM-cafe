@@ -27,15 +27,18 @@
                 </li>
                 <c:if test="${isAuthorized}">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-profile"/>">
+                        <a class="nav-link active" aria-current="page"
+                           href="<c:url value="/cafe?command=user-to-profile"/>">
                             <fmt:message key="link.profile"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-my-orders"/>">
+                        <a class="nav-link active" aria-current="page"
+                           href="<c:url value="/cafe?command=user-to-my-orders"/>">
                             <fmt:message key="link.myOrders"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user-to-review"/>">
+                        <a class="nav-link active" aria-current="page"
+                           href="<c:url value="/cafe?command=user-to-review"/>">
                             <fmt:message key="link.review"/></a>
                     </li>
                     <c:if test="${isAdmin}">
@@ -59,12 +62,10 @@
             </ul>
             <div class="navbar-nav col-3 d-flex justify-content-end px-2">
                 <c:if test="${isAuthorized}">
-                    <form onclick="cartToJson(this, 'inputCart-nav')" method="post" action="<c:url value="/cafe"/>">
-                        <input name="command" type="text" hidden value="user-to-cart">
-                        <input id="inputCart-nav" type="text" name="cart" hidden>
+                    <a href="<c:url value="/cafe?command=user-to-cart"/>">
                         <img id="cart" class="mx-3" src="<c:url value='../../../img/shopping-cart.svg'/>" alt="cart"
                              width="35" height="35"/>
-                    </form>
+                    </a>
                 </c:if>
                 <form action="<c:url value="/cafe"/>" method="post">
                     <input type="hidden" name="command" value="locale-switch">
