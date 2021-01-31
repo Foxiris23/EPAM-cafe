@@ -4,6 +4,11 @@ import com.jwd.cafe.config.AppConfig;
 import com.jwd.cafe.exception.EmailException;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Sends an email with activation link to the given address
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ActivationMailSender extends AbstractMailSender {
     private static final String SUBJECT = "EPAM-cafe account verification";

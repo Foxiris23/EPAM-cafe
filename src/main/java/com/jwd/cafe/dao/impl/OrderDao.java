@@ -13,6 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Provides CRUD operations for working with the {@link Order}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class OrderDao extends AbstractDao<Order> {
     private static volatile OrderDao instance;

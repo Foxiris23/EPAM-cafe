@@ -6,6 +6,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * The class prints a {@link Set} of violations messages
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class ViolationMessageTag extends TagSupport {
 
     private Set<String> violationMessages;

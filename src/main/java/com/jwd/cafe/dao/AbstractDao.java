@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provides base realisation of CRUD operations for working with the entities
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
     protected final DatabaseConnectionPool databaseConnectionPool;
@@ -22,22 +28,54 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         this.databaseConnectionPool = databaseConnectionPool;
     }
 
+    /**
+     * @param resultSet contains all data received form database
+     * @return {@link Optional} of {@link AbstractEntity}
+     * @throws DaoException if the parsing failed
+     */
     protected abstract Optional<T> parseResultSet(ResultSet resultSet) throws SQLException, DaoException;
 
+    /**
+     * @return {@link String} of select all sql query
+     */
     protected abstract String getFindAllSql();
 
+    /**
+     * @return {@link String} of create sql query
+     */
     protected abstract String getCreateSql();
 
+    /**
+     * @return {@link String} of update sql query
+     */
     protected abstract String getUpdateSql();
 
+    /**
+     * @return {@link String} of delete sql query
+     */
     protected abstract String getDeleteSql();
 
+    /**
+     * @return {@link String} of count all sql query
+     */
     protected abstract String getCountSql();
 
+    /**
+     * @param preparedStatement contains create sql query to be prepared
+     * @throws SQLException if the setting statement parameters failed
+     */
     protected abstract void prepareCreateStatement(PreparedStatement preparedStatement, T entity) throws SQLException;
 
+    /**
+     * @param preparedStatement contains update sql query to be prepared
+     * @throws SQLException if the setting statement parameters failed
+     */
     protected abstract void prepareUpdateStatement(PreparedStatement preparedStatement, T entity) throws SQLException;
 
+    /**
+     * @param specification contains an addition to sql query
+     * @throws DaoException if executing of {@link PreparedStatement} or parsing of {@link ResultSet} fails
+     */
     @Override
     public List<T> findBySpecification(final Specification specification) throws DaoException {
         List<T> entities = new ArrayList<>();
@@ -59,6 +97,10 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         return entities;
     }
 
+    /**
+     * @param entity entity to create
+     * @throws DaoException if executing of {@link PreparedStatement}
+     */
     @Override
     public void create(final T entity) throws DaoException {
         try (Connection connection = databaseConnectionPool.getConnection()) {
@@ -72,6 +114,10 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         }
     }
 
+    /**
+     * @param entity entity to update
+     * @throws DaoException if executing of {@link PreparedStatement}
+     */
     @Override
     public T update(final T entity) throws DaoException {
         try (Connection connection = databaseConnectionPool.getConnection()) {
@@ -86,6 +132,10 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         return entity;
     }
 
+    /**
+     * @param specification contains an addition to sql query
+     * @throws DaoException if executing of {@link PreparedStatement}
+     */
     @Override
     public void deleteWithSpecification(final Specification specification) throws DaoException {
         try (Connection connection = databaseConnectionPool.getConnection()) {
@@ -100,6 +150,10 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         }
     }
 
+    /**
+     * @param specification contains an addition to sql query
+     * @throws DaoException if executing of {@link PreparedStatement}
+     */
     @Override
     public Long countWithSpecification(final Specification specification) throws DaoException {
         try (Connection connection = databaseConnectionPool.getConnection()) {

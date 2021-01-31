@@ -3,6 +3,7 @@ package com.jwd.cafe.service;
 import com.jwd.cafe.dao.impl.ReviewDao;
 import com.jwd.cafe.dao.specification.CountAll;
 import com.jwd.cafe.dao.specification.FindAllLimitOffset;
+import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
@@ -11,6 +12,12 @@ import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 
+/**
+ * The class provides a business logic of application connected with {@link Review}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ReviewService {
     private static volatile ReviewService instance;

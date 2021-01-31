@@ -2,10 +2,15 @@ package com.jwd.cafe.util;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * The class is used to implement pagination
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Getter
 @EqualsAndHashCode
 public class Pageable<T> {

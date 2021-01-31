@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * The class proxies {@link Connection} to substitute close method
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class DatabaseConnectionProxy implements Connection {
     private final Connection connection;
 

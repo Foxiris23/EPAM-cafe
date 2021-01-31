@@ -4,6 +4,11 @@ import com.jwd.cafe.config.MailSenderConfig;
 import com.jwd.cafe.exception.EmailException;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Sends an email with the {@link com.jwd.cafe.domain.Order}'s review code to the given address
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class OrderDetailsMailSender extends AbstractMailSender {
     private final MailSenderConfig mailSenderConfig = MailSenderConfig.getInstance();

@@ -2,6 +2,12 @@ package com.jwd.cafe.domain;
 
 import com.jwd.cafe.exception.EntityNotFoundException;
 
+/**
+ * The representation of {@link Order}'s payment method
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public enum PaymentMethod {
     BALANCE(1), CASH(2), CARD(3);
     private final Integer id;

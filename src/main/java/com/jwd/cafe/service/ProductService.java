@@ -5,6 +5,7 @@ import com.jwd.cafe.dao.specification.FindAllProductsByTypeId;
 import com.jwd.cafe.dao.specification.FindByProductName;
 import com.jwd.cafe.dao.specification.FindByProductTypeId;
 import com.jwd.cafe.dao.specification.FindProductById;
+import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
@@ -16,6 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides a business logic of application connected with {@link Product}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ProductService {
     private static volatile ProductService instance;

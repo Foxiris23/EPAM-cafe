@@ -1,5 +1,10 @@
 package com.jwd.cafe.exception;
 
+/**
+ * The exception will be thrown when service catches {@link DaoException}
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class ServiceException extends Exception {
     public ServiceException() {
     }

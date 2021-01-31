@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 
+/**
+ * The class provides a business logic of application connected with {@link Order}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class OrderService {
     private static volatile OrderService instance;

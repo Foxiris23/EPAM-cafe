@@ -3,6 +3,7 @@ package com.jwd.cafe.service;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.dao.impl.UserDao;
 import com.jwd.cafe.dao.specification.*;
+import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
@@ -17,6 +18,12 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
+/**
+ * The class provides a business logic of application connected with {@link User}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class UserService {
     private static volatile UserService instance;
@@ -85,6 +92,7 @@ public class UserService {
                     return Optional.of("serverMessage.blockedAccount");
                 }
                 if (user.getIsActive()) {
+                    user.setPassword(null);
                     session.put(RequestConstant.USER, user);
                     return Optional.empty();
                 }

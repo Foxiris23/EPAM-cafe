@@ -2,6 +2,7 @@ package com.jwd.cafe.dao.impl;
 
 import com.jwd.cafe.dao.AbstractDao;
 import com.jwd.cafe.dao.specification.FindProductTypeById;
+import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.DaoException;
@@ -17,6 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Provides CRUD operations for working with the {@link Product}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ProductDao extends AbstractDao<Product> {
     private static volatile ProductDao instance;

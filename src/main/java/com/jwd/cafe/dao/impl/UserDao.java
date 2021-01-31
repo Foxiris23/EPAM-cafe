@@ -1,6 +1,7 @@
 package com.jwd.cafe.dao.impl;
 
 import com.jwd.cafe.dao.AbstractDao;
+import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.domain.Role;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.pool.DatabaseConnectionPool;
@@ -10,6 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * Provides CRUD operations for working with the {@link User}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class UserDao extends AbstractDao<User> {
     private static volatile UserDao instance;
 

@@ -14,6 +14,12 @@ import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Pool of connections for working with database
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class DatabaseConnectionPool {
     private static volatile DatabaseConnectionPool instance;
@@ -34,10 +40,16 @@ public class DatabaseConnectionPool {
         return localInstance;
     }
 
+    /**
+     * Fills connection pool
+     *
+     * @throws ClassNotFoundException if mysql jdbc Driver class not found
+     */
     public void initConnectionPool() throws ClassNotFoundException {
         Integer initSize = dbConfig.getPoolSize();
         availableConnections = new ArrayBlockingQueue<>(initSize);
         takenConnections = new ArrayDeque<>();
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try {
             for (int i = 0; i < initSize; i++) {
                 availableConnections.offer(new DatabaseConnectionProxy(DriverManager.getConnection(
@@ -50,6 +62,11 @@ public class DatabaseConnectionPool {
         }
     }
 
+    /**
+     * Destroys connection pool
+     *
+     * @throws SQLException when closing of connections fails
+     */
     public void destroyConnectionPool(boolean withDeregistration) throws SQLException {
         try {
             for (Connection connection : availableConnections) {
@@ -72,6 +89,11 @@ public class DatabaseConnectionPool {
         }
     }
 
+    /**
+     * Destroys connection pool
+     *
+     * @return {@link Connection} from the connection pool
+     */
     public Connection getConnection() {
         try {
             Connection connection = availableConnections.take();
@@ -83,6 +105,11 @@ public class DatabaseConnectionPool {
         }
     }
 
+    /**
+     * Returns the given connection to a pool
+     *
+     * @param connection instance of {@link DatabaseConnectionProxy}
+     */
     public void releaseConnection(final Connection connection) throws SQLException {
         if (connection instanceof DatabaseConnectionProxy) {
             connection.setAutoCommit(true);

@@ -3,6 +3,7 @@ package com.jwd.cafe.dao.impl;
 import com.jwd.cafe.dao.AbstractDao;
 import com.jwd.cafe.dao.specification.FindOrderById;
 import com.jwd.cafe.domain.Order;
+import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.pool.DatabaseConnectionPool;
@@ -13,6 +14,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provides CRUD operations for working with the {@link Review}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class ReviewDao extends AbstractDao<Review> {
     private static volatile ReviewDao instance;
     private final OrderDao orderDao;

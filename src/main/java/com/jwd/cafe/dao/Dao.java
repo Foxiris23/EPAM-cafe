@@ -5,6 +5,12 @@ import com.jwd.cafe.exception.DaoException;
 
 import java.util.List;
 
+/**
+ * The interface provides CRUD operations
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public interface Dao<T> {
     List<T> findBySpecification(Specification specification) throws DaoException;
 

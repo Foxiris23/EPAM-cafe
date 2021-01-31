@@ -1,6 +1,7 @@
 package com.jwd.cafe.dao.impl;
 
 import com.jwd.cafe.dao.AbstractDao;
+import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.pool.DatabaseConnectionPool;
 
@@ -9,6 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * Provides CRUD operations for working with the {@link ProductType}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class ProductTypeDao extends AbstractDao<ProductType> {
     private static volatile ProductTypeDao instance;
 

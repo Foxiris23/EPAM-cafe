@@ -4,6 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * The representation of {@link User}'s reviews
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)

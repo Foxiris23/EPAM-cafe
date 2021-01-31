@@ -7,6 +7,12 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+/**
+ * The representation of order
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder(setterPrefix = "with")
