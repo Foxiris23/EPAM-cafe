@@ -5,6 +5,12 @@ import lombok.Getter;
 
 import java.util.Properties;
 
+/**
+ * The class encapsulates in itself all the data coming from the database properties file
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Getter
 public class DatabaseConfig {
     private static volatile DatabaseConfig instance;

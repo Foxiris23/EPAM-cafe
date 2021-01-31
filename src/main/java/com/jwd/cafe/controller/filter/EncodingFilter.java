@@ -5,6 +5,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+/**
+ * The class changes {@link com.jwd.cafe.command.RequestContext} encoding
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @WebFilter(filterName = "Encoding", urlPatterns = {"/*"}, initParams = {@WebInitParam(name = "encoding",
         value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {

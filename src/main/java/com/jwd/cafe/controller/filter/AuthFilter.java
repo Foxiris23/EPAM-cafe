@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The class filters {@link com.jwd.cafe.command.RequestContext} and blocks users without access
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 @WebFilter(urlPatterns = {"/cafe", "/rest"},
         initParams = {@WebInitParam(name = "COMMAND", value = "to-access-blocked")})

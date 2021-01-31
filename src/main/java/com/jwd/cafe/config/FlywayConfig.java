@@ -2,6 +2,12 @@ package com.jwd.cafe.config;
 
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
 
+/**
+ * The class configures a {@link org.flywaydb.core.Flyway}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class FlywayConfig extends ClassicConfiguration {
     private static volatile FlywayConfig instance;
 

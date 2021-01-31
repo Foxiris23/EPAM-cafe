@@ -6,7 +6,10 @@ import java.util.Properties;
 
 
 /**
+ * The class encapsulates in itself all the data coming from the mail properties file
  *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
  */
 public class MailSenderConfig {
     private static final String USERNAME_PROP = "mail.username";

@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/**
+ * Wrapper class for request used to strip parameters if xss attack detected
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class XssRequestWrapper extends HttpServletRequestWrapper {
 
     private static final String AVOID_SCRIPT_FRAGMENTS_PATTERN = "<script>(.*?)</script>";

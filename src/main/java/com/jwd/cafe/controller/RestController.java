@@ -14,8 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Entry point for all rest requests
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @WebServlet("/rest")
-@MultipartConfig(location = "D:\\Epam projects\\cafe\\target\\cafe\\uploads")
+@MultipartConfig(location = "D:\\Epam projects\\cafe\\target\\cafe\\uploads", maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 2)
 public class RestController extends HttpServlet {
     private RestCommandFactory restCommandFactory;
 

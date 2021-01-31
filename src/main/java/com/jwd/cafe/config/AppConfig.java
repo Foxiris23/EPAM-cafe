@@ -3,8 +3,15 @@ package com.jwd.cafe.config;
 import com.jwd.cafe.util.PropertyReaderUtil;
 import lombok.Getter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
+/**
+ * The class encapsulates in itself all the data coming from the application properties file
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Getter
 public class AppConfig {
     private static volatile AppConfig instance;

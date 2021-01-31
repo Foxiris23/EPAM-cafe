@@ -1,8 +1,12 @@
 package com.jwd.cafe.constant;
 
+/**
+ * The class contains all jsp directions
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class PageConstant {
-    public static final String ADMIN_PATH = "WEB-INF/jsp/admin";
-    public static final String USER_PATH = "WEB-INF/jsp/secured";
     public static final String MAIN_PAGE = "WEB-INF/jsp/open/main.jsp";
     public static final String LOGIN_PAGE = "WEB-INF/jsp/open/login.jsp";
     public static final String REGISTRATION_PAGE = "WEB-INF/jsp/open/registration.jsp";

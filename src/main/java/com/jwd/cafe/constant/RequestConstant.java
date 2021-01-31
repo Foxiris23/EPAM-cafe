@@ -1,5 +1,12 @@
 package com.jwd.cafe.constant;
 
+/**
+ * The class contains all {@link com.jwd.cafe.command.RequestContext}
+ * and {@link com.jwd.cafe.command.ResponseContext} parameters names
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 public class RequestConstant {
     public static final String COMMAND = "command";
     public static final String SERVER_MESSAGE = "server_message";
@@ -20,7 +27,6 @@ public class RequestConstant {
     public static final String VERIFICATION_CODE = "verification-code";
     public static final String MENU_ITEMS = "menu_items";
     public static final String IMG_FILE = "img-0";
-    public static final String TYPE_NAME = "type-name";
     public static final String PAGE = "page";
     public static final String ID = "id";
     public static final String PRODUCT_TYPE = "product_type";
@@ -29,9 +35,7 @@ public class RequestConstant {
     public static final String PRICE = "price";
     public static final String TYPE_ID = "type_id";
     public static final String PRODUCT_NAME = "product-name";
-    public static final String PRODUCT_ID = "product-id";
     public static final String CART = "cart";
-    public static final String AMOUNT = "amount";
     public static final String TOTAL_COST = "total_cost";
     public static final String ADDRESS = "address";
     public static final String TIME = "time";
@@ -42,7 +46,6 @@ public class RequestConstant {
     public static final String REVIEW = "review";
     public static final String RATE = "rate";
     public static final String POINTS = "points";
-    public static final String USERS = "users";
     public static final String CHECK = "check";
     public static final String TRUE = "true";
     public static final String SELECT = "select";

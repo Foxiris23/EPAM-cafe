@@ -8,6 +8,12 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 
+/**
+ * Inits {@link DatabaseConnectionPool} on application start up
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 @WebListener
 public class ConnectionPoolListener implements ServletContextListener {
