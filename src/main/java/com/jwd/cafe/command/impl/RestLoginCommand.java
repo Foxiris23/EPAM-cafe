@@ -13,14 +13,25 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Authorizes the {@link com.jwd.cafe.domain.User} and saves him in the {@link javax.servlet.http.HttpSession}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
-public class RestLoginCommand implements Command{
+public class RestLoginCommand implements Command {
     private final UserService userService;
 
     public RestLoginCommand(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages =

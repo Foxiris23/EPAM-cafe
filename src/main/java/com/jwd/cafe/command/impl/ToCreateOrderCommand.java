@@ -6,14 +6,17 @@ import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductService;
-import com.jwd.cafe.validator.impl.StringValidator;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
+/**
+ * Moves an user to createOrder page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToCreateOrderCommand implements Command {
     private final ProductService productService;
@@ -22,6 +25,11 @@ public class ToCreateOrderCommand implements Command {
         this.productService = productService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
             try {

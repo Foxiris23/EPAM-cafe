@@ -2,6 +2,7 @@ package com.jwd.cafe.command.impl;
 
 import com.jwd.cafe.command.*;
 import com.jwd.cafe.constant.RequestConstant;
+import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductTypeService;
 import com.jwd.cafe.util.LocalizationHelper;
@@ -14,6 +15,12 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Changes a {@link com.jwd.cafe.domain.ProductType}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class RestEditTypeCommand implements Command{
     private final ProductTypeService productTypeService;
@@ -22,6 +29,11 @@ public class RestEditTypeCommand implements Command{
         this.productTypeService = productTypeService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages =

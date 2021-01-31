@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Moves an user to his profile page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToProfileCommand implements Command{
     private final UserService userService;
@@ -20,6 +26,11 @@ public class ToProfileCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         try {

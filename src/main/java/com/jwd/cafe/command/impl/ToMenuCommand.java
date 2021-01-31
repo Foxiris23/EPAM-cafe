@@ -10,6 +10,12 @@ import lombok.extern.log4j.Log4j2;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Moves an user to menu page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToMenuCommand implements Command{
     private final ProductTypeService productTypeService;
@@ -18,6 +24,11 @@ public class ToMenuCommand implements Command{
         this.productTypeService = productTypeService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         try {

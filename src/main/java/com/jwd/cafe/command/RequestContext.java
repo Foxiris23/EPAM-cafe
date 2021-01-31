@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -17,6 +16,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Wraps data of the ${@link HttpServletRequest}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
@@ -27,8 +32,6 @@ public class RequestContext {
     private Map<String, Object> requestAttributes;
 
     private Map<String, Object> sessionAttributes;
-
-    private Map<String, String> cookies;
 
     private Map<String, Part> requestParts;
 
@@ -41,7 +44,6 @@ public class RequestContext {
         requestParameters = extractRequestParameters(request);
         requestAttributes = extractRequestAttributes(request);
         sessionAttributes = extractSessionAttributes(request);
-        cookies = extractCookies(request);
         requestParts = extractRequestParts(request);
         locale = extractLocale(request);
     }

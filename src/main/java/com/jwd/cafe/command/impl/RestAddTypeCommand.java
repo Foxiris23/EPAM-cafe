@@ -14,6 +14,12 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Creates a new {@link ProductType}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class RestAddTypeCommand implements Command{
     private final ProductTypeService productTypeService;
@@ -22,6 +28,11 @@ public class RestAddTypeCommand implements Command{
         this.productTypeService = productTypeService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new ImgFileValidator(new ProductNameValidator(null)).validate(requestContext);

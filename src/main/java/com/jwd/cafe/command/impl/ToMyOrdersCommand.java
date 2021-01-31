@@ -13,6 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Moves an user to his {@link Order}'s page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToMyOrdersCommand implements Command {
     private final OrderService orderService;
@@ -21,6 +27,11 @@ public class ToMyOrdersCommand implements Command {
         this.orderService = orderService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         try {

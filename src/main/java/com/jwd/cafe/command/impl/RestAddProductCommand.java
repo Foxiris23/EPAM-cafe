@@ -17,6 +17,12 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Creates a new {@link Product}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class RestAddProductCommand implements Command {
     private final ProductTypeService productTypeService;
@@ -27,6 +33,11 @@ public class RestAddProductCommand implements Command {
         this.productService = productService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new ProductNameValidator(

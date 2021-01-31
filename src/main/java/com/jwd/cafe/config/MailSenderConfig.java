@@ -4,6 +4,10 @@ import com.jwd.cafe.util.PropertyReaderUtil;
 
 import java.util.Properties;
 
+
+/**
+ *
+ */
 public class MailSenderConfig {
     private static final String USERNAME_PROP = "mail.username";
     private static final String PASSWORD_PROP = "mail.password";

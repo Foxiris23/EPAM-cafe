@@ -21,6 +21,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Allows admin to update an {@link com.jwd.cafe.domain.Order}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class RestUpdateOrderCommand implements Command {
     private final UserService userService;
@@ -31,6 +37,11 @@ public class RestUpdateOrderCommand implements Command {
         this.orderService = orderService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationsMessages = new IntValidator(new StringValidator(null, RequestConstant.SELECT),

@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Moves an admin to reviews page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToReviewsCommand implements Command {
     private static final Integer PER_PAGE = 30;
@@ -24,6 +30,11 @@ public class ToReviewsCommand implements Command {
         this.reviewService = reviewService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new IntValidator(null, RequestConstant.PAGE).validate(requestContext);

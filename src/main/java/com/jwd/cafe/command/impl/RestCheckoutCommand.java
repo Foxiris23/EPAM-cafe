@@ -24,6 +24,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Creates a new {@link Order}
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class RestCheckoutCommand implements Command {
     private final UserService userService;
@@ -36,6 +42,11 @@ public class RestCheckoutCommand implements Command {
         this.orderService = orderService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link RestErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new DateTimeValidator(
@@ -47,7 +58,6 @@ public class RestCheckoutCommand implements Command {
                 String dateTimeStr = requestContext.getRequestParameters().get(RequestConstant.TIME);
                 String address = requestContext.getRequestParameters().get(RequestConstant.ADDRESS);
                 String method = requestContext.getRequestParameters().get(RequestConstant.METHOD);
-                String json = requestContext.getRequestParameters().get(RequestConstant.CART);
                 Map<Integer, Integer> cart =
                         (Map<Integer, Integer>) requestContext.getSessionAttributes().get(RequestConstant.CART);
                 if (cart != null) {

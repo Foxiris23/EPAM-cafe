@@ -4,6 +4,12 @@ import com.jwd.cafe.command.impl.*;
 import com.jwd.cafe.service.*;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Types of rest {@link Command}s
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public enum RestCommandType {
     LOGIN(new RestLoginCommand(UserService.getInstance()), "login"),

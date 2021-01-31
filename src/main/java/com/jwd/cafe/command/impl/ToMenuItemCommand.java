@@ -14,6 +14,12 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
 
+/**
+ * Moves an user to menuItem page
+ *
+ * @author Mark Kazyrytski on 2021-01-31.
+ * @version 1.0.0
+ */
 @Log4j2
 public class ToMenuItemCommand implements Command {
     private static final Integer PER_PAGE = 9;
@@ -25,6 +31,11 @@ public class ToMenuItemCommand implements Command {
         this.productService = productService;
     }
 
+    /**
+     * @param requestContext contains all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResponseContext}
+     * executes {@link ErrorCommand} if {@link ServiceException} was caught
+     */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Set<String> violationMessages = new IntValidator(new IntValidator(null, RequestConstant.PAGE),
