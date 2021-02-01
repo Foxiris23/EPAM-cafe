@@ -3,6 +3,7 @@ package com.jwd.cafe.controller.filter;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.Role;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.domain.dto.UserDto;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
@@ -38,7 +39,7 @@ public class AuthFilter implements Filter {
         request.setCharacterEncoding("UTF-8");
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(RequestConstant.USER);
+        UserDto user = (UserDto) session.getAttribute(RequestConstant.USER);
         if (hasAccess(request, user)) {
             filterChain.doFilter(request, response);
         } else {
@@ -47,7 +48,7 @@ public class AuthFilter implements Filter {
         }
     }
 
-    private boolean hasAccess(HttpServletRequest request, User user) {
+    private boolean hasAccess(HttpServletRequest request, UserDto user) {
         boolean result = true;
         String command = request.getParameter(RequestConstant.COMMAND);
         if (command != null) {

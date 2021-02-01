@@ -63,19 +63,19 @@ public class OrderService {
         return Optional.empty();
     }
 
-    public List<Order> findAllUsersOrders(User user) throws ServiceException {
+    public List<Order> findAllOrdersByUserId(Long id) throws ServiceException {
         try {
-            return orderDao.findBySpecification(new FindOrderByUserId(user.getId()));
+            return orderDao.findBySpecification(new FindOrderByUserId(id));
         } catch (DaoException e) {
             log.error("Failed to find users orders, dao provided exception");
             throw new ServiceException(e);
         }
     }
 
-    public Optional<Order> findOrderByUserAndReviewCode(User user, String code) throws ServiceException {
+    public Optional<Order> findOrderByUserIdAndReviewCode(Long id, String code) throws ServiceException {
         try {
             List<Order> orders = orderDao.findBySpecification(
-                    new FindOrderByUserIdAndCode(user.getId(), code));
+                    new FindOrderByUserIdAndCode(id, code));
             if (orders.size() > 0) {
                 return Optional.of(orders.get(0));
             }

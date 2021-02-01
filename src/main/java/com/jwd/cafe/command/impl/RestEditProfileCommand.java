@@ -2,8 +2,8 @@ package com.jwd.cafe.command.impl;
 
 import com.jwd.cafe.command.*;
 import com.jwd.cafe.constant.RequestConstant;
-import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.domain.dto.UserDto;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.UserService;
 import com.jwd.cafe.validator.impl.NameValidator;
@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,13 +40,18 @@ public class RestEditProfileCommand implements Command {
                 new PhoneNumberValidator(null)).validate(requestContext);
 
         if (violationMessages.isEmpty()) {
-            User user = (User) requestContext.getSessionAttributes().get(RequestConstant.USER);
-            user.setFirstName(requestContext.getRequestParameters().get(RequestConstant.FIRST_NAME));
-            user.setLastName(requestContext.getRequestParameters().get(RequestConstant.LAST_NAME));
             try {
-                userService.updateUser(user);
-                return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
-                        new HashMap<>());
+                UserDto userDto = (UserDto) requestContext.getSessionAttributes().get(RequestConstant.USER);
+                Optional<User> userOptional = userService.findById(userDto.getId());
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    user.setFirstName(requestContext.getRequestParameters().get(RequestConstant.FIRST_NAME));
+                    user.setLastName(requestContext.getRequestParameters().get(RequestConstant.LAST_NAME));
+                    userService.updateUser(user);
+                    return new ResponseContext(
+                            Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
+                            new HashMap<>());
+                }
             } catch (ServiceException e) {
                 log.error("Failed to execute edit profile command");
                 return RestCommandType.ERROR.getCommand().execute(requestContext);

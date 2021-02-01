@@ -3,8 +3,8 @@ package com.jwd.cafe.service;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.dao.impl.UserDao;
 import com.jwd.cafe.dao.specification.*;
-import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.domain.dto.UserDto;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.mail.ActivationMailSender;
@@ -91,7 +91,7 @@ public class UserService {
                     return Optional.of("serverMessage.blockedAccount");
                 }
                 if (user.getIsActive()) {
-                    session.put(RequestConstant.USER, user);
+                    session.put(RequestConstant.USER, new UserDto(user.getId(), user.getRole()));
                     return Optional.empty();
                 }
                 return Optional.of("serverMessage.activateAccountPlease");

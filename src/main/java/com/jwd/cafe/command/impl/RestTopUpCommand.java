@@ -2,14 +2,15 @@ package com.jwd.cafe.command.impl;
 
 import com.jwd.cafe.command.*;
 import com.jwd.cafe.constant.RequestConstant;
-import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.domain.dto.UserDto;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.UserService;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Top up {@link User}'s balance
@@ -18,7 +19,7 @@ import java.util.Map;
  * @version 1.0.0
  */
 @Log4j2
-public class RestTopUpCommand implements Command{
+public class RestTopUpCommand implements Command {
     private final UserService userService;
 
     public RestTopUpCommand(UserService userService) {
@@ -32,14 +33,18 @@ public class RestTopUpCommand implements Command{
      */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
-        User user = (User) requestContext.getSessionAttributes().get(RequestConstant.USER);
-        user.setBalance(user.getBalance() + 30);
+        UserDto userDto = (UserDto) requestContext.getSessionAttributes().get(RequestConstant.USER);
         try {
-            userService.updateUser(user);
-            return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
-                    new HashMap<>());
+            Optional<User> userOptional = userService.findById(userDto.getId());
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                user.setBalance(user.getBalance() + 30);
+                userService.updateUser(user);
+                return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),
+                        new HashMap<>());
+            }
         } catch (ServiceException e) {
-            log.error("Failed to top up balance of user with id:" + user.getId());
+            log.error("Failed to top up balance of user with id:" + userDto.getId());
         }
         return RestCommandType.ERROR.getCommand().execute(requestContext);
     }

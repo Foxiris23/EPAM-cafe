@@ -4,6 +4,7 @@ import com.jwd.cafe.command.*;
 import com.jwd.cafe.constant.PageConstant;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.*;
+import com.jwd.cafe.domain.dto.UserDto;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.OrderService;
 import com.jwd.cafe.service.ProductService;
@@ -65,7 +66,7 @@ public class RestCheckoutCommand implements Command {
                 Map<Product, Integer> productsMap = productService.loadCart(cart);
 
                 Optional<User> user = userService.findById((
-                        (User) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
+                        (UserDto) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
                 if (productsMap.size() > 0 && user.isPresent()) {
                     LocalDateTime deliveryDate = LocalDateTime.parse(dateTimeStr,
                             DateTimeFormatter.ofPattern(RequestConstant.TIME_PATTERN));

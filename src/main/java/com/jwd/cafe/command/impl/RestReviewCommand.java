@@ -6,6 +6,7 @@ import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.domain.Review;
 import com.jwd.cafe.domain.User;
+import com.jwd.cafe.domain.dto.UserDto;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.OrderService;
 import com.jwd.cafe.service.ReviewService;
@@ -50,8 +51,8 @@ public class RestReviewCommand implements Command {
                 String feedback = requestContext.getRequestParameters().get(RequestConstant.REVIEW);
                 Integer rate = Integer.parseInt(requestContext.getRequestParameters().get(RequestConstant.RATE));
                 String code = requestContext.getRequestParameters().get(RequestConstant.CODE);
-                User user = (User) requestContext.getSessionAttributes().get(RequestConstant.USER);
-                Optional<Order> orderOptional = orderService.findOrderByUserAndReviewCode(user, code);
+                UserDto user = (UserDto) requestContext.getSessionAttributes().get(RequestConstant.USER);
+                Optional<Order> orderOptional = orderService.findOrderByUserIdAndReviewCode(user.getId(), code);
                 if (orderOptional.isEmpty()) {
                     return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE,
                             LocalizationHelper.localize(
