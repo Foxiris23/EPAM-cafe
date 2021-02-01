@@ -85,7 +85,7 @@ public class RestCheckoutCommand implements Command {
                         return new ResponseContext(
                                 Map.of(RequestConstant.REDIRECT_COMMAND,
                                         CommandType.USER_TO_ORDER_CONFIRM.getName()),
-                                new HashMap<>());
+                                Map.of(RequestConstant.CART, new HashMap<>()));
                     }
                     return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper
                             .localize(requestContext.getLocale(), serverMessage.get())), new HashMap<>());

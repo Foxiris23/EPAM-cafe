@@ -8,7 +8,7 @@
 <%@ taglib prefix="app" uri="/WEB-INF/taglib/app.tld" %>
 <%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="../parts/header.jsp"/>
-<c:set var="user" value="${requestScope.user}"/>
+<c:set var="user" value="${requestScope.user}" scope="request"/>
 <div class="d-flex justify-content-center">
     <div class="w-50">
         <p class="display-2 text-center"><fmt:message key="title.profile"/></p>

@@ -70,7 +70,6 @@ public class UserService {
 
 
     public Optional<User> findByEmail(String email) throws ServiceException {
-        User user = null;
         try {
             List<User> users = userDao.findBySpecification(new FindByEmail(email));
             if (users.size() > 0) {
@@ -92,7 +91,6 @@ public class UserService {
                     return Optional.of("serverMessage.blockedAccount");
                 }
                 if (user.getIsActive()) {
-                    user.setPassword(null);
                     session.put(RequestConstant.USER, user);
                     return Optional.empty();
                 }
