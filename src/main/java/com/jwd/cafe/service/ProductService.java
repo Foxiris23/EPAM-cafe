@@ -5,13 +5,13 @@ import com.jwd.cafe.dao.specification.FindAllProductsByTypeId;
 import com.jwd.cafe.dao.specification.FindByProductName;
 import com.jwd.cafe.dao.specification.FindByProductTypeId;
 import com.jwd.cafe.dao.specification.FindProductById;
-import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.VisibleForTesting;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,11 +110,12 @@ public class ProductService {
     }
 
     public Double calcTotalCost(Map<Product, Integer> products) {
-        double totalCost = 0;
+        BigDecimal bigDecimal = new BigDecimal(0);
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            totalCost += entry.getKey().getPrice() * entry.getValue();
+            BigDecimal price = BigDecimal.valueOf(entry.getKey().getPrice());
+            bigDecimal = bigDecimal.add(price.multiply(BigDecimal.valueOf(entry.getValue())));
         }
-        return totalCost;
+        return bigDecimal.doubleValue();
     }
 
     public void deleteByTypeId(Integer id) throws ServiceException {
