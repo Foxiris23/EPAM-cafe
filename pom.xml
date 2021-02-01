@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <name>cafe Maven Webapp</name>
-    <url>http://www.example.com</url>
+    <url>http://127.0.0.1:8080</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
