@@ -1,9 +1,7 @@
 package com.jwd.cafe.command.impl;
 
-import com.jwd.cafe.command.Command;
-import com.jwd.cafe.command.CommandType;
-import com.jwd.cafe.command.RequestContext;
-import com.jwd.cafe.command.ResponseContext;
+import com.jwd.cafe.command.*;
+import com.jwd.cafe.constant.PageConstant;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.*;
 import com.jwd.cafe.exception.ServiceException;
@@ -60,35 +58,37 @@ public class RestCheckoutCommand implements Command {
                 String method = requestContext.getRequestParameters().get(RequestConstant.METHOD);
                 Map<Integer, Integer> cart =
                         (Map<Integer, Integer>) requestContext.getSessionAttributes().get(RequestConstant.CART);
-                if (cart != null) {
-                    Map<Product, Integer> productsMap = productService.loadCart(cart);
+                if (cart == null || cart.isEmpty()) {
+                    return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.CART),
+                            Map.of(RequestConstant.CART, new HashMap<>()), new HashMap<>());
+                }
+                Map<Product, Integer> productsMap = productService.loadCart(cart);
 
-                    Optional<User> user = userService.findById((
-                            (User) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
-                    if (productsMap.size() > 0 && user.isPresent()) {
-                        LocalDateTime deliveryDate = LocalDateTime.parse(dateTimeStr,
-                                DateTimeFormatter.ofPattern(RequestConstant.TIME_PATTERN));
-                        double totalCost = productService.calcTotalCost(productsMap);
+                Optional<User> user = userService.findById((
+                        (User) requestContext.getSessionAttributes().get(RequestConstant.USER)).getId());
+                if (productsMap.size() > 0 && user.isPresent()) {
+                    LocalDateTime deliveryDate = LocalDateTime.parse(dateTimeStr,
+                            DateTimeFormatter.ofPattern(RequestConstant.TIME_PATTERN));
+                    double totalCost = productService.calcTotalCost(productsMap);
 
-                        Order order = Order.builder()
-                                .withCost(totalCost).withAddress(address)
-                                .withReviewCode(RandomStringUtils.randomAlphabetic(10))
-                                .withCreateDate(LocalDateTime.now())
-                                .withDeliveryDate(deliveryDate)
-                                .withStatus(OrderStatus.ACTIVE).withMethod(PaymentMethod.valueOf(method))
-                                .withUser(user.get())
-                                .withProducts(productsMap).build();
+                    Order order = Order.builder()
+                            .withCost(totalCost).withAddress(address)
+                            .withReviewCode(RandomStringUtils.randomAlphabetic(10))
+                            .withCreateDate(LocalDateTime.now())
+                            .withDeliveryDate(deliveryDate)
+                            .withStatus(OrderStatus.ACTIVE).withMethod(PaymentMethod.valueOf(method))
+                            .withUser(user.get())
+                            .withProducts(productsMap).build();
 
-                        Optional<String> serverMessage = orderService.create(order);
-                        if (serverMessage.isEmpty()) {
-                            return new ResponseContext(
-                                    Map.of(RequestConstant.REDIRECT_COMMAND,
-                                            CommandType.USER_TO_ORDER_CONFIRM.getName()),
-                                    new HashMap<>());
-                        }
-                        return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper
-                                .localize(requestContext.getLocale(), serverMessage.get())), new HashMap<>());
+                    Optional<String> serverMessage = orderService.create(order);
+                    if (serverMessage.isEmpty()) {
+                        return new ResponseContext(
+                                Map.of(RequestConstant.REDIRECT_COMMAND,
+                                        CommandType.USER_TO_ORDER_CONFIRM.getName()),
+                                new HashMap<>());
                     }
+                    return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, LocalizationHelper
+                            .localize(requestContext.getLocale(), serverMessage.get())), new HashMap<>());
                 }
             } catch (ServiceException e) {
                 log.error("Failed to create order");
