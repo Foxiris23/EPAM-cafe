@@ -137,16 +137,14 @@ public class OrderDao extends AbstractDao<Order> {
             PreparedStatement preparedStatementCreateOrder = null;
             PreparedStatement preparedStatementProduct = null;
             try {
-                preparedStatementCreateOrder = connection.prepareStatement(SQL_CREATE);
+                preparedStatementCreateOrder = connection.prepareStatement(SQL_CREATE, Statement.RETURN_GENERATED_KEYS);
                 prepareFullOrderStatement(preparedStatementCreateOrder, entity);
-                preparedStatementCreateOrder.execute();
-                preparedStatementCreateOrder.close();
-                ResultSet resultSet = connection.prepareStatement("select LAST_INSERT_ID() as id").executeQuery();
+                preparedStatementCreateOrder.executeUpdate();
+                ResultSet resultSet = preparedStatementCreateOrder.getGeneratedKeys();
                 if (resultSet.next()) {
-                    long id = resultSet.getLong("id");
+                    long id = resultSet.getLong(1);
                     for (Map.Entry<Product, Integer> entry : entity.getProducts().entrySet()) {
-                        preparedStatementProduct = connection.prepareStatement(
-                                "INSERT INTO order_product(order_id, product_id, amount) VALUES (?, ?, ?)");
+                        preparedStatementProduct = connection.prepareStatement(SQL_CREATE_ORDERS_PRODUCTS);
                         preparedStatementProduct.setLong(1, id);
                         preparedStatementProduct.setInt(2, entry.getKey().getId());
                         preparedStatementProduct.setInt(3, entry.getValue());
@@ -154,15 +152,14 @@ public class OrderDao extends AbstractDao<Order> {
                         preparedStatementProduct.close();
                     }
                     connection.commit();
+                    preparedStatementCreateOrder.close();
                 } else {
                     throw new SQLException();
                 }
             } catch (SQLException e) {
                 log.error("Failed to create order");
-                if (preparedStatementCreateOrder != null) {
-                    preparedStatementCreateOrder.close();
-                }
                 connection.rollback();
+                throw new DaoException(e);
             } finally {
                 if (preparedStatementCreateOrder != null) {
                     preparedStatementCreateOrder.close();
