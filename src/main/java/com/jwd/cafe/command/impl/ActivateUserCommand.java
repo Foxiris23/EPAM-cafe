@@ -22,10 +22,10 @@ import java.util.Set;
  * @version 1.0.0
  */
 @Log4j2
-public class ActivateUserCommand implements Command{
+public class ActivateUserCommand implements Command {
     private final UserService userService;
 
-    public ActivateUserCommand(UserService userService){
+    public ActivateUserCommand(UserService userService) {
         this.userService = userService;
     }
 
@@ -43,12 +43,14 @@ public class ActivateUserCommand implements Command{
             try {
                 Optional<String> serverMessage = userService.activateUser(activationCode);
                 if (serverMessage.isEmpty()) {
-                    return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.LOGIN_PAGE),
+                    return new ResponseContext(
+                            new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.LOGIN_PAGE),
                             Map.of(RequestConstant.VERIFICATION_MESSAGE, LocalizationHelper.localize(
                                     requestContext.getLocale(), "verificationMessage.verificationSuccess")),
                             new HashMap<>());
                 }
-                return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.LOGIN_PAGE), Map.of(
+                return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.LOGIN_PAGE),
+                        Map.of(
                         RequestConstant.SERVER_MESSAGE, LocalizationHelper.localize(
                                 requestContext.getLocale(), serverMessage.get())), new HashMap<>());
             } catch (ServiceException e) {

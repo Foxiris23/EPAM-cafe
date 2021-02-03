@@ -79,15 +79,6 @@ public class RequestContext {
         return parts;
     }
 
-    private Map<String, String> extractCookies(HttpServletRequest request) {
-        Map<String, String> cookiesMap = new HashMap<>();
-        Cookie[] cookiesArray = request.getCookies();
-        if (cookiesArray != null && cookiesArray.length != 0) {
-            Arrays.stream(cookiesArray).forEach(cookie -> cookiesMap.put(cookie.getName(), cookie.getValue()));
-        }
-        return cookiesMap;
-    }
-
     private Map<String, Object> extractSessionAttributes(HttpServletRequest request) {
         Map<String, Object> sessionAttributes = new HashMap<>();
         Enumeration<String> attributeNames = request.getSession(true).getAttributeNames();

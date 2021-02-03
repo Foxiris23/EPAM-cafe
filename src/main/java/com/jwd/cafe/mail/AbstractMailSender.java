@@ -1,15 +1,12 @@
 package com.jwd.cafe.mail;
 
 import com.jwd.cafe.config.MailSenderConfig;
-import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.EmailException;
 import lombok.extern.log4j.Log4j2;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * Sends an email to the given address

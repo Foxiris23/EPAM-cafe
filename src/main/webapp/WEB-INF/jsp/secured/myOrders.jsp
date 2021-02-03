@@ -14,20 +14,24 @@
 <div class="row justify-content-center mb-4">
     <c:forEach items="${requestScope.orders}" var="order">
         <div class="card m-4 col-6" style="width: 18rem;">
-            <div class="card-body">
-                <c:if test="${order.status.name() eq 'ACTIVE'}">
-                    <h5 class="card-title text-success"><fmt:message key="title.activeOrder"/></h5>
-                </c:if>
-                <c:if test="${order.status.name() ne 'ACTIVE'}">
-                    <h5 class="card-title"><fmt:message key="title.notActiveOrder"/></h5>
-                </c:if>
-                <h6 class="card-subtitle mb-2 text-muted">${order.cost} $</h6>
-                <c:forEach items="${order.products.entrySet()}" var="product">
-                    <p class="card-text">${product.getKey().name} X${product.getValue()}</p>
-                </c:forEach>
-                <hr>
-                <p class="card-text"><fmt:message key="label.deliveryDate"/>:</p>
-                <input class="form-control" type="datetime-local" readonly value="${order.deliveryDate}">
+            <div class="card-body row">
+                <div class="container-fluid m-0 p-0 col align-self-start">
+                    <c:if test="${order.status.name() eq 'ACTIVE'}">
+                        <h5 class="card-title text-success"><fmt:message key="title.activeOrder"/></h5>
+                    </c:if>
+                    <c:if test="${order.status.name() ne 'ACTIVE'}">
+                        <h5 class="card-title"><fmt:message key="title.notActiveOrder"/></h5>
+                    </c:if>
+                    <h6 class="card-subtitle mb-2 text-muted">${order.cost} $</h6>
+                    <c:forEach items="${order.products.entrySet()}" var="product">
+                        <p class="card-text">${product.getKey().name} X${product.getValue()}</p>
+                    </c:forEach>
+                </div>
+                <div class="container-fluid m-0 p-0 col align-self-end">
+                    <hr>
+                    <p class="card-text"><fmt:message key="label.deliveryDate"/>:</p>
+                    <input class="form-control" type="datetime-local" readonly value="${order.deliveryDate}">
+                </div>
             </div>
         </div>
     </c:forEach>

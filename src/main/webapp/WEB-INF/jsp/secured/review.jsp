@@ -8,7 +8,6 @@
 <%@ taglib prefix="app" uri="/WEB-INF/taglib/app.tld" %>
 <%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="../parts/header.jsp"/>
-<c:set var="user" value="${requestScope.user}"/>
 <div class="container-fluid d-flex justify-content-center">
     <form name="review" action="<c:url value="/cafe"/>" method="post" class="w-50 needs-validation"
           novalidate accept-charset="UTF-8">

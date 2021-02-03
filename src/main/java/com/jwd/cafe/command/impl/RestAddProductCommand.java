@@ -7,6 +7,7 @@ import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductService;
 import com.jwd.cafe.service.ProductTypeService;
+import com.jwd.cafe.util.LocalizationHelper;
 import com.jwd.cafe.validator.impl.DescriptionValidator;
 import com.jwd.cafe.validator.impl.ImgFileValidator;
 import com.jwd.cafe.validator.impl.PriceValidator;
@@ -60,10 +61,13 @@ public class RestAddProductCommand implements Command {
                     if (serverMessage.isEmpty()) {
                         img.write(filename);
                         return new ResponseContext(Map.of(
-                                RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU_ITEM.getName(), RequestConstant.TYPE_ID, type_id),
+                                RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU_ITEM.getName(),
+                                RequestConstant.TYPE_ID, type_id),
                                 new HashMap<>());
                     }
-                    return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE, serverMessage.get()), new HashMap<>());
+                    return new ResponseContext(Map.of(RequestConstant.SERVER_MESSAGE,
+                            LocalizationHelper.localize(requestContext.getLocale(), serverMessage.get())),
+                            new HashMap<>());
                 }
             } catch (NumberFormatException | ServiceException | IOException e) {
                 log.error("Failed to create a product", e);

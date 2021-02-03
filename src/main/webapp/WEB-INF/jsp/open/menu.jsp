@@ -20,7 +20,7 @@
                 </div>
             </a>
             <c:if test="${isAdmin}">
-                <button type="button" class="btn btn-dark mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
                         onclick='prepareModal("${item.id}", "${item.name}")'>
                     <fmt:message key="button.edit"/>
                 </button>

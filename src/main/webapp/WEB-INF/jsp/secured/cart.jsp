@@ -32,8 +32,8 @@
                             <div class="d-flex justify-content-center">
                                 <div class="row align-items-end">
                                     <div class="btn-group" role="group">
-                                        <form name="addToCart" method="post" action="<c:url value="/rest"/>"
-                                              class="needs-validation w-100" novalidate>
+                                        <form name="addToCart-${item.getKey().id}" method="post"
+                                              action="<c:url value="/rest"/>" class="needs-validation w-100" novalidate>
                                             <input type="hidden" name="id" value="${item.getKey().id}">
                                             <input type="hidden" name="command" value="user-delete-from-cart">
                                             <button type="submit" onclick="add(${item.getKey().id}, -1)"
@@ -43,7 +43,8 @@
                                         <button id="${item.getKey().id}" type="button" class="btn btn-outline-dark"
                                                 style="min-width: 2rem; border-width: 0" disabled>${item.getValue()}
                                         </button>
-                                        <form name="deleteFromCart" method="post" action="<c:url value="/rest"/>"
+                                        <form name="deleteFromCart-${item.getKey().id}"
+                                              method="post" action="<c:url value="/rest"/>"
                                               class="needs-validation w-100" novalidate>
                                             <input type="hidden" name="id" value="${item.getKey().id}">
                                             <input type="hidden" name="command" value="user-add-to-cart">
