@@ -8,6 +8,7 @@ import com.jwd.cafe.config.AppConfig;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.OrderStatus;
+import com.jwd.cafe.domain.PaymentMethod;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.OrderService;
@@ -57,17 +58,6 @@ public class RestUpdateOrderCommand implements Command {
                     return RestCommandType.ERROR.getCommand().execute(requestContext);
                 }
                 Order order = orderOptional.get();
-                if (orderStatus.equals(OrderStatus.UNACCEPTED)) {
-                    User user = order.getUser();
-                    double cost = order.getCost();
-                    AppConfig appConfig = AppConfig.getInstance();
-                    user.setLoyaltyPoints(
-                            user.getLoyaltyPoints() - (int) cost * appConfig.getPointsPerDollar());
-                    if (user.getLoyaltyPoints() < appConfig.getMinusToBlock()) {
-                        user.setIsBlocked(true);
-                    }
-                    userService.updateUser(user);
-                }
                 order.setStatus(orderStatus);
                 orderService.updateOrder(order);
                 return new ResponseContext(new HashMap<>(), new HashMap<>());

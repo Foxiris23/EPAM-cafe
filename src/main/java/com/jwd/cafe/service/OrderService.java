@@ -4,6 +4,7 @@ import com.jwd.cafe.config.AppConfig;
 import com.jwd.cafe.dao.impl.OrderDao;
 import com.jwd.cafe.dao.specification.*;
 import com.jwd.cafe.domain.Order;
+import com.jwd.cafe.domain.OrderStatus;
 import com.jwd.cafe.domain.PaymentMethod;
 import com.jwd.cafe.domain.User;
 import com.jwd.cafe.exception.DaoException;
@@ -44,6 +45,9 @@ public class OrderService {
     public Optional<String> create(Order order) throws ServiceException {
         try {
             User user = order.getUser();
+            if (user.getIsBlocked()) {
+                return Optional.of("serverMessage.blockedAccount");
+            }
             if (user.getBalance() < 0 && order.getMethod().equals(PaymentMethod.BALANCE)) {
                 return Optional.of("serverMessage.insufficientBalance");
             }
@@ -121,6 +125,26 @@ public class OrderService {
     public void updateOrder(Order order) throws ServiceException {
         try {
             orderDao.update(order);
+            User user = order.getUser();
+            double cost = order.getCost();
+            AppConfig appConfig = AppConfig.getInstance();
+            Integer pointsPerDollar = appConfig.getPointsPerDollar();
+            PaymentMethod paymentMethod = order.getMethod();
+            OrderStatus orderStatus = order.getStatus();
+            if (orderStatus.equals(OrderStatus.CANCELLED)) {
+                if (paymentMethod.equals(PaymentMethod.BALANCE)) {
+                    user.setBalance(user.getBalance() + cost);
+                }
+                user.setLoyaltyPoints(user.getLoyaltyPoints() - (int) cost * pointsPerDollar);
+            }
+            if (orderStatus.equals(OrderStatus.UNACCEPTED) && !paymentMethod.equals(PaymentMethod.BALANCE)) {
+                user.setLoyaltyPoints(
+                        user.getLoyaltyPoints() - (int) cost * pointsPerDollar - pointsPerDollar);
+                if (user.getLoyaltyPoints() < appConfig.getMinusToBlock()) {
+                    user.setIsBlocked(true);
+                }
+            }
+            userService.updateUser(user);
         } catch (DaoException e) {
             log.error("Failed to update order");
             throw new ServiceException(e);
