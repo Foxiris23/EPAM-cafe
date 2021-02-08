@@ -47,6 +47,7 @@ public class RestEditProfileCommand implements Command {
                     User user = userOptional.get();
                     user.setFirstName(requestContext.getRequestParameters().get(RequestConstant.FIRST_NAME));
                     user.setLastName(requestContext.getRequestParameters().get(RequestConstant.LAST_NAME));
+                    user.setPhoneNumber(requestContext.getRequestParameters().get(RequestConstant.PHONE_NUMBER));
                     userService.updateUser(user);
                     return new ResponseContext(
                             Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.USER_TO_PROFILE.getName()),

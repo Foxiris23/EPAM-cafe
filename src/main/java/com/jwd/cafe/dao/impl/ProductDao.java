@@ -2,7 +2,6 @@ package com.jwd.cafe.dao.impl;
 
 import com.jwd.cafe.dao.AbstractDao;
 import com.jwd.cafe.dao.specification.FindProductTypeById;
-import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.DaoException;
@@ -136,7 +135,7 @@ public class ProductDao extends AbstractDao<Product> {
                 }
             }
         } catch (SQLException e) {
-            //todo log
+            log.error("Failed to find order's products by id");
             throw new DaoException();
         }
         return products;
