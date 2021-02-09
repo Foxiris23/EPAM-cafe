@@ -22,6 +22,14 @@ public class EncodingFilter implements Filter {
 
     public void init(FilterConfig config) {
         encoding = config.getInitParameter("encoding");
+
+        ServletContext context = config.getServletContext();
+
+        FilterRegistration reqXssFilter = context.getFilterRegistration("XssAttackFilter");
+        reqXssFilter.addMappingForUrlPatterns(null, true, "/*");
+
+        FilterRegistration reqAuthFilter = context.getFilterRegistration("AuthFilter");
+        reqAuthFilter.addMappingForUrlPatterns(null, true, "/rest", "/cafe");
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,

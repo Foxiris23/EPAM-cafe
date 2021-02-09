@@ -21,7 +21,7 @@ import java.io.IOException;
  * @version 1.0.0
  */
 @Log4j2
-@WebFilter(urlPatterns = {"/cafe", "/rest"},
+@WebFilter(filterName = "AuthFilter",
         initParams = {@WebInitParam(name = "COMMAND", value = "to-access-blocked")})
 public class AuthFilter implements Filter {
 
@@ -36,7 +36,6 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        request.setCharacterEncoding("UTF-8");
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         UserDto user = (UserDto) session.getAttribute(RequestConstant.USER);
