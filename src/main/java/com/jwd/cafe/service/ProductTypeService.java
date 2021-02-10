@@ -4,10 +4,10 @@ import com.jwd.cafe.dao.impl.ProductTypeDao;
 import com.jwd.cafe.dao.specification.FindAllLimitOffset;
 import com.jwd.cafe.dao.specification.FindByTypeName;
 import com.jwd.cafe.dao.specification.FindProductTypeById;
-import com.jwd.cafe.domain.Order;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.DaoException;
 import com.jwd.cafe.exception.ServiceException;
+import com.jwd.cafe.util.IOUtil;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -108,6 +108,7 @@ public class ProductTypeService {
         Optional<ProductType> productTypeOptional = findProductTypeById(id);
         if (productTypeOptional.isPresent()) {
             ProductType productType = productTypeOptional.get();
+            String oldFilename = productType.getFilename();
             if (!productType.getName().equals(newName)) {
                 if (findByTypeName(newName).isPresent()) {
                     return Optional.of("serverMessage.typeNameAlreadyTaken");
@@ -116,6 +117,7 @@ public class ProductTypeService {
             productType.setName(newName);
             productType.setFilename(newFilename);
             update(productType);
+            IOUtil.deleteUpload(oldFilename);
         } else {
             return Optional.of("serverMessage.productTypeNotFound");
         }

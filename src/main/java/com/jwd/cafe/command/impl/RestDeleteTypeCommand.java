@@ -7,13 +7,14 @@ import com.jwd.cafe.command.ResponseContext;
 import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.ProductType;
 import com.jwd.cafe.exception.ServiceException;
-import com.jwd.cafe.service.ProductService;
 import com.jwd.cafe.service.ProductTypeService;
+import com.jwd.cafe.util.IOUtil;
 import com.jwd.cafe.validator.impl.IntValidator;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -43,9 +44,15 @@ public class RestDeleteTypeCommand implements Command {
         if (violationMessages.isEmpty()) {
             Integer id = Integer.parseInt(requestContext.getRequestParameters().get(RequestConstant.ID));
             try {
-                productTypeService.deleteTypeById(id);
-                return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU.getName()),
-                        new HashMap<>());
+                Optional<ProductType> productTypeOptional = productTypeService.findProductTypeById(id);
+
+                if (productTypeOptional.isPresent()) {
+                    ProductType productType = productTypeOptional.get();
+                    productTypeService.deleteTypeById(productType.getId());
+                    IOUtil.deleteUpload(productType.getFilename());
+                    return new ResponseContext(Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU.getName()),
+                            new HashMap<>());
+                }
             } catch (ServiceException e) {
                 log.error("Failed to execute delete type product");
             }

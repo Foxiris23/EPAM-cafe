@@ -94,7 +94,7 @@ create table if not exists order_product
     constraint order_product_fk foreign key (order_id)
      references cafe_order (id) on delete restrict on update cascade,
     constraint product_order_fk foreign key (product_id)
-     references product (id) on delete restrict on update cascade
+     references product (id) on delete cascade on update cascade
 );
 
 create table if not exists review

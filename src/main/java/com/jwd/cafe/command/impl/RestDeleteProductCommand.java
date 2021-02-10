@@ -8,11 +8,13 @@ import com.jwd.cafe.constant.RequestConstant;
 import com.jwd.cafe.domain.Product;
 import com.jwd.cafe.exception.ServiceException;
 import com.jwd.cafe.service.ProductService;
+import com.jwd.cafe.util.IOUtil;
 import com.jwd.cafe.validator.impl.IntValidator;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -42,10 +44,15 @@ public class RestDeleteProductCommand implements Command {
         if (violationMessages.isEmpty()) {
             Integer id = Integer.parseInt(requestContext.getRequestParameters().get(RequestConstant.ID));
             try {
-                productService.delete(id);
-                return new ResponseContext(
-                        Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU_ITEM.getName()),
-                        new HashMap<>());
+                Optional<Product> productOptional = productService.findProductById(id);
+                if (productOptional.isPresent()) {
+                    Product product = productOptional.get();
+                    productService.delete(product.getId());
+                    IOUtil.deleteUpload(product.getImgFilename());
+                    return new ResponseContext(
+                            Map.of(RequestConstant.REDIRECT_COMMAND, CommandType.TO_MENU_ITEM.getName()),
+                            new HashMap<>());
+                }
             } catch (ServiceException e) {
                 log.error("Failed to execute delete product command", e);
             }
