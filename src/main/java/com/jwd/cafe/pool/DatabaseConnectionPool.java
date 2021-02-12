@@ -90,7 +90,7 @@ public class DatabaseConnectionPool {
     }
 
     /**
-     * Destroys connection pool
+     * Returns a connection from connection pool
      *
      * @return {@link Connection} from the connection pool
      */
