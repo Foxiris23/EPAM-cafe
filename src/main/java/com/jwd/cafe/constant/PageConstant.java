@@ -26,4 +26,5 @@ public class PageConstant {
     public static final String ORDERS = "WEB-INF/jsp/admin/orders.jsp";
     public static final String REVIEWS = "WEB-INF/jsp/admin/reviews.jsp";
     public static final String ACCESS_BLOCKED_PAGE = "WEB-INF/jsp/open/accessBlocked.jsp";
+    public static final String ERROR_404 = "WEB-INF/jsp/open/404.jsp";
 }

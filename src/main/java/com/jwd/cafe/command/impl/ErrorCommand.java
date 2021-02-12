@@ -20,6 +20,7 @@ public class ErrorCommand implements Command{
      */
     @Override
     public ResponseContext execute(RequestContext requestContext) {
-        return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
+        return new ResponseContext(new ForwardResponse(ResponseType.Type.FORWARD, PageConstant.ERROR_PAGE),
+                new HashMap<>(), new HashMap<>());
     }
 }

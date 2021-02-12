@@ -34,7 +34,8 @@ public enum CommandType {
     USER_TO_REVIEW_CONFIRM(new ToReviewConfirmCommand(), "user-to-review-confirm"),
     ADMIN_TO_USERS(new ToUsersCommand(UserService.getInstance()), "admin-to-users"),
     ADMIN_TO_ORDERS(new ToOrdersCommand(OrderService.getInstance()), "admin-to-orders"),
-    ADMIN_TO_REVIEWS(new ToReviewsCommand(ReviewService.getInstance()), "admin-to-reviews");
+    ADMIN_TO_REVIEWS(new ToReviewsCommand(ReviewService.getInstance()), "admin-to-reviews"),
+    ERROR_404(new PageNotFoundCommand(), "error-404");
     private final Command command;
     private final String name;
 
@@ -57,7 +58,7 @@ public enum CommandType {
             commandType = CommandType.valueOf(name.toUpperCase().replaceAll("-", "_"));
         } catch (IllegalArgumentException | NullPointerException e) {
             log.warn("Unknown command: " + name);
-            commandType = CommandType.ERROR;
+            commandType = CommandType.ERROR_404;
         }
         return commandType.command;
     }
